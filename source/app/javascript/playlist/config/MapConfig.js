@@ -14,9 +14,9 @@ define(["dojo/_base/array",
 	return function MapConfig()
 	{
 
-		var useDefaultRenderer = true;
+		var useDefaultRenderer = false;
 
-		var maxAllowablePoints = 99;
+		var maxAllowablePoints = 1000;
 
 		var markerPostionDefault = {
 			height: 28,
@@ -68,7 +68,12 @@ define(["dojo/_base/array",
 				return renderer;
 			}
 			else{
-				// Add custom renderer
+				_tempRendererField = "Template";
+				
+				var defaultSymbol = new PictureMarkerSymbol("resources/images/markers/simple/magenta.png", markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset);
+				var renderer = new UniqueValueRenderer(defaultSymbol, _tempRendererField);
+
+				return renderer;
 			}
 		}
 
