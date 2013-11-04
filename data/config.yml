@@ -43,25 +43,43 @@ description: ""
 # LEGEND AND DESCRIPTION
 
 # Playlist layer title
-playlistTitle: Playlist Layer
+playlistTitle: Application
 
 # Legend names for playlist markers
-playlistRedIcon: Red
-playlistBlueIcon: Blue
-playlistGreenIcon: Green
-playlistPurpleIcon: Purple
+basicIcon: Basic
+compareIcon: Compare
+countdownIcon: Countdown
+mapTourIcon: Map Tour
+playlistIcon: Playlist
+shortlistIcon: Shortlist
+sideAccordionIcon: Side Accordion
+swipeSpyglassIcon: Swipe/Spyglass
+textLegendIcon: Text and Legend
+customIcon: Custom
 
 # Legend visibility for playlist markers
-playlistRedIconVisible: true
-playlistBlueIconVisible: true
-playlistGreenIconVisible: true
-playlistPurpleIconVisible: true
+basicIconVisible: true
+compareIconVisible: true
+countdownIconVisible: true
+mapTourIconVisible: true
+playlistIconVisible: true
+shortlistIconVisible: true
+sideAccordionIconVisible: true
+swipeSpyglassIconVisible: true
+textLegendIconVisible: true
+customIconVisible: true
 
 # Legend icon URL for playlist markers
-playlistRedIconURL: resources/images/markers/indexed/red/NumberIcon1.png
-playlistBlueIconURL: resources/images/markers/indexed/blue/NumberIconb1.png
-playlistGreenIconURL: resources/images/markers/indexed/green/NumberIcong1.png
-playlistPurpleIconURL: resources/images/markers/indexed/purple/IconPurple1.png
+basicIconURL: resources/images/markers/simple/brown.png
+compareIconURL: resources/images/markers/simple/yellow.png
+countdownIconURL: resources/images/markers/simple/purple.png
+mapTourIconURL: resources/images/markers/simple/red.png
+playlistIconURL: resources/images/markers/simple/lightGreen.png
+shortlistIconURL: resources/images/markers/simple/orange.png
+sideAccordionIconURL: resources/images/markers/simple/blue.png
+swipeSpyglassIconURL: resources/images/markers/simple/teal.png
+textLegendIconURL: resources/images/markers/simple/lightBlue.png
+customIconURL: resources/images/markers/simple/magenta.png
 
 # MAPS AND DATA CONFIGURATION
 

@@ -70,8 +70,18 @@ define(["dojo/_base/array",
 			else{
 				_tempRendererField = "Template";
 				
-				var defaultSymbol = new PictureMarkerSymbol("resources/images/markers/simple/magenta.png", markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset);
+				var defaultSymbol = new PictureMarkerSymbol(configOptions.playlistLegend.items["custom"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset);
 				var renderer = new UniqueValueRenderer(defaultSymbol, _tempRendererField);
+
+				renderer.addValue("Basic", new PictureMarkerSymbol(configOptions.playlistLegend.items["basic"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
+				renderer.addValue("Compare", new PictureMarkerSymbol(configOptions.playlistLegend.items["compare"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
+				renderer.addValue("Countdown", new PictureMarkerSymbol(configOptions.playlistLegend.items["countdown"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));				
+				renderer.addValue("Map Tour", new PictureMarkerSymbol(configOptions.playlistLegend.items["mapTour"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
+				renderer.addValue("Playlist", new PictureMarkerSymbol(configOptions.playlistLegend.items["playlist"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
+				renderer.addValue("Shortlist", new PictureMarkerSymbol(configOptions.playlistLegend.items["shortlist"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
+				renderer.addValue("Side Accordion", new PictureMarkerSymbol(configOptions.playlistLegend.items["sideAccordion"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
+				renderer.addValue("Swipe/Spyglass", new PictureMarkerSymbol(configOptions.playlistLegend.items["swipeSpyglass"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
+				renderer.addValue("Text and Legend", new PictureMarkerSymbol(configOptions.playlistLegend.items["textLegend"].iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset));
 
 				return renderer;
 			}
