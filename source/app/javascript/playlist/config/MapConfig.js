@@ -19,17 +19,17 @@ define(["dojo/_base/array",
 		var maxAllowablePoints = 1000;
 
 		var markerPostionDefault = {
-			height: 28,
-			width: 22,
-			xOffset: 3,
-			yOffset: 8
+			height: 24,
+			width: 21,
+			xOffset: 2,
+			yOffset: 5
 		}
 
 		var markerPostionHighlight = {
-			height: 34,
-			width: 27,
-			xOffset: 3,
-			yOffset: 10
+			height: 29,
+			width: 25,
+			xOffset: 2,
+			yOffset: 7
 		}
 
 		var _tempRendererField;
