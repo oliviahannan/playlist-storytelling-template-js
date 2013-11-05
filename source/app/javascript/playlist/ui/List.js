@@ -1,6 +1,7 @@
 define(["dojo/_base/array",
 	"lib/jquery/jquery-1.10.2.min",
-	"lib/jquery.autoellipsis-1.0.10.min"], 
+	"lib/jquery.autoellipsis-1.0.10.min",
+	"lib/jquery-ui-1.10.3.custom.min"], 
 	function(array){
 	/**
 	* Playlist List
@@ -11,9 +12,11 @@ define(["dojo/_base/array",
 	* Dependencies: Jquery 1.10.2
 	*/
 
-	return function List(selector,onLoad,onGetTitleField,onSelect,onHighlight,onRemoveHightlight)
+	return function List(selector,searchSelector,onLoad,onGetTitleField,onSelect,onHighlight,onRemoveHightlight)
 	{
 		var _listEl = $(selector);
+
+		addSearchEvents();
 
 		this.update = function(lyrItems)
 		{
@@ -56,6 +59,38 @@ define(["dojo/_base/array",
 			$(".playlist-item").removeClass("selected");
 		};
 
+		function addSearchEvents()
+		{
+			if (searchSelector){
+
+				$(searchSelector).autocomplete({
+					source: function(request,response){
+						regex = new RegExp($.ui.autocomplete.escapeRegex(request.term),"i");
+
+						response($.grep($(".playlist-item"),function(el){
+							return ($(el).find(".item-title div").html().match(regex));
+						}));
+					},
+					response: function(event,ui){
+						$(".playlist-item").hide();
+						$.each(ui.content,function(i,el){
+							$(el).show();
+						});
+					},
+					close: function(){
+						if ($(searchSelector).val() === ""){
+							$(".playlist-item").show();
+						}
+					},
+					change: function(){
+						if ($(searchSelector).val() === ""){
+							$(".playlist-item").show();
+						}
+					}
+				});
+			}
+		}
+
 		function buildList(lyrItems)
 		{
 			for (var layerId in lyrItems){
@@ -73,7 +108,7 @@ define(["dojo/_base/array",
 						itemStr = '\
 							<div class="playlist-item" layer-id="' + layerId + '" object-id="' + objId + '">\
 								<img src=' + item.iconURL + ' alt="" class="marker" />\
-								<div class="thumbnail-container" style="background-image: url(' + item.graphic.attributes[attr.thumbnail] + ')"></div>\
+								<div class="thumbnail-container" style="background-image: url(' + item.graphic.attributes[attr.thumbnail] + '); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + item.graphic.attributes[attr.thumbnail] + '", sizingMethod="scale");"></div>\
 								<h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6>\
 							</div>\
 						';
