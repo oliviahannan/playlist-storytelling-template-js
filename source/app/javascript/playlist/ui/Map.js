@@ -36,14 +36,14 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 	* Class to define a new map for the playlist template
 	*/
 
-	return function PlaylistMap(geometryServiceURL,bingMapsKey,webmapId,playlistLegendConfig,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection)
+	return function PlaylistMap(geometryServiceURL,bingMapsKey,webmapId,filterField,playlistLegendConfig,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection)
 	{
 		var _mapConfig = new MapConfig(),
 		_map,
 		_mapResponse,
 		_mapReady = false,
 		_mapTip,
-		_layerCount = 0,
+		_playlistLayers = [],
 		_playlistItems = {},
 		_highlightEnabled = true,
 		_titleFields = {},
@@ -130,7 +130,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 		this.getLayerCount = function()
 		{
-			return _layerCount;
+			return _playlistLayers.length;
 		};
 
 		this.getPlaylistItems = function()
@@ -207,13 +207,73 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 		this.removeHighlight = function()
 		{
 			var graphic = _lastHightlighedGraphic;
-			var layer = graphic.getLayer();
-			if (layer){
-				var newSym = layer.renderer.getSymbol(graphic).setWidth(_mapConfig.getMarkerPosition().width).setHeight(_mapConfig.getMarkerPosition().height).setOffset(_mapConfig.getMarkerPosition().xOffset,_mapConfig.getMarkerPosition().yOffset);
-				graphic.setSymbol(newSym);
+			if (graphic){
+				var layer = graphic.getLayer();
+				if (layer){
+					var newSym = layer.renderer.getSymbol(graphic).setWidth(_mapConfig.getMarkerPosition().width).setHeight(_mapConfig.getMarkerPosition().height).setOffset(_mapConfig.getMarkerPosition().xOffset,_mapConfig.getMarkerPosition().yOffset);
+					graphic.setSymbol(newSym);
+				}
 			}
 			hideMapTip();
 		};
+
+		this.filterGraphics = function(items)
+		{
+			array.forEach(_playlistLayers,function(lyr){
+				var layerObj = _map.getLayer(lyr.layerId);
+				if (!items){
+					layerObj.hide();
+				}
+				else if (items.length === 0){
+					if (lyr.supportsDefinitionExpression){
+						layerObj.setDefinitionExpression(lyr.defaultExpression);
+					}
+					else{
+						array.forEach(layerObj.graphics,function(g,i){
+							if (i < _mapConfig.getMaxAllowablePoints()){
+								g.show();
+							}
+						});
+					}
+					layerObj.show();
+				}
+				else{
+					if (lyr.supportsDefinitionExpression){
+						var objectIds = "";
+						array.forEach(items,function(item){
+							if (item.layerId === lyr.layerId){
+								if (objectIds === ""){
+									objectIds = objectIds + item.objectId;
+								}
+								else{
+									objectIds = objectIds + "," + item.objectId;
+								}
+							}
+						});
+						var expression = lyr.objectIdField + " IN (" + objectIds + ")";
+						layerObj.setDefinitionExpression(expression);
+					}
+					else{
+						var objectIds = [];
+						array.forEach(items,function(item){
+							if (item.layerId === lyr.layerId){
+								objectIds.push(item.objectId);
+							}
+						});
+
+						array.forEach(layerObj.graphics,function(g){
+							if (array.indexOf(objectIds, g.attributes[lyr.objectIdField]) >= 0){
+								g.show();
+							}
+							else{
+								g.hide();
+							}
+						});
+					}
+					layerObj.show();
+				}
+			});
+		}
 
 		function getSidePanelWidth()
 		{
@@ -236,6 +296,13 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					array.forEach(layer.featureCollection.layers,function(l){
 						if (l.layerDefinition.geometryType === "esriGeometryPoint" && l.visibility){
 							var playlistLyr = l.layerObject;
+							var lyrProp = {
+								layerId: playlistLyr.id,
+								objectIdField: playlistLyr.objectIdField,
+								supportsDefinitionExpression: false,
+								defaultExpression: false
+							};
+							_playlistLayers.push(lyrProp);
 							setRenderer(playlistLyr);
 							addLayerEvents(playlistLyr);
 							layerIds.push(playlistLyr.id);
@@ -254,6 +321,13 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 						playlistLyr.queryFeatures(query).then(function(results){
 							var features = results.features.slice(0,_mapConfig.getMaxAllowablePoints());
 							playlistLyr.setDefinitionExpression(results.objectIdFieldName + "<=" + (features[features.length - 1].attributes[results.objectIdFieldName]));
+							var lyrProp = {
+								layerId: playlistLyr.id,
+								objectIdField: playlistLyr.objectIdField,
+								supportsDefinitionExpression: true,
+								defaultExpression: (results.objectIdFieldName + "<=" + (features[features.length - 1].attributes[results.objectIdFieldName]))
+							};
+							_playlistLayers.push(lyrProp);
 
 							// Create Temporary layer object to get first 99 features from a feature layer
 							var layer = {
@@ -268,8 +342,6 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					layerIds.push(playlistLyr.id);
 				}
 			});
-			
-			_layerCount = layerIds.length;
 			buildLegend(layerIds);
 		}
 
@@ -321,7 +393,8 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 						layerId: layerObj.id,
 						objectIdField: layerObj.objectIdField,
 						graphic: grp,
-						iconURL: symbol.url
+						iconURL: symbol.url,
+						filter: grp.attributes[filterField]
 					};
 					lyrItems.push(item);
 				}

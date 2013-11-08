@@ -7,9 +7,10 @@
 	<div id="side-pane">
 		
 		<div id="side-pane-controls" class="region-top">
-			<span class="icon-list-2 playlist-control toggle-side-pane" title="Minimize list"></span>
-			<span class="icon-stack playlist-control toggle-legend" title="Toggle Legend"></span>
 			<span class="icon-open-book playlist-control toggle-description" title="Toggle Description"></span>
+			<span class="icon-list-2 playlist-control toggle-legend" title="Toggle Legend"></span>
+			<span class="icon-push-left playlist-control toggle-side-pane" title="Minimize list"></span>
+			<span class="icon-push-right playlist-control toggle-side-pane" title="Minimize list"></span>
 		</div>
 
 		<div id="side-pane-content" class="region-center">
@@ -22,7 +23,18 @@
 			</div><!--info-pane-->
 			<div id="playlist-pane" class="region-center">
 				<div id="playlist-controls" class="region-top">
-					<input id="search" type="text" id="playlist-search" name="Search" placeholder="Type to search..."><span id="search-submit" class="icon-search"></span>
+					<input id="search" type="text" id="playlist-search" name="Search" placeholder="Type to search...">
+					<span id="search-submit" class="icon-search"></span>
+					<div id="filter-wrapper">
+						<p id="filter-toggle" class="icon-filter"></p>
+						<div id="filter-content">
+							<h5 class="filter-title">Choose items to filter:</h5>
+							<label class="select-all">Select All
+								<input type="checkbox" checked>
+							</label>
+							<hr>
+						</div>
+					</div>					
 				</div>
 				<div id="playlist" class="region-center">
 					<div class="playlist-no-layer-message">
