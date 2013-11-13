@@ -72,7 +72,7 @@ define(["dojo/_base/array",
 				return renderer;
 			}
 			else{
-				_tempRendererField = "Template";
+				_tempRendererField = "TemplateText";
 				
 				var sym = new PictureMarkerSymbol(configOptions.playlistLegend.items.custom.iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset);
 				var rend = new UniqueValueRenderer(sym, _tempRendererField);
