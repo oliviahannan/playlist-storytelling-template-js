@@ -56,7 +56,7 @@ define(["dojo/has",
 				configOptions.webmap = urlObject.query.webmap;
 			}
 
-			_map = new Map(_mobile,configOptions.geometryServiceUrl,configOptions.bingMapsKey,configOptions.webmap,configOptions.excludedLayers,configOptions.dataFields,configOptions.playlistLegend.visible,configOptions.playlistLegend,"map","playlist-legend","legend","#side-pane",onMapLoad,onMapLegendHide,onLayersUpdate,onMarkerOver,onMarkerOut,onMarkerSelect,onMarkerRemoveSelection),
+			_map = new Map(_mobile,configOptions.geometryServiceUrl,configOptions.bingMapsKey,configOptions.webmap,configOptions.excludedLayers,configOptions.dataFields,configOptions.playlistLegend.visible,configOptions.playlistLegend,"map","playlist-legend","legend","#side-pane",onMapLoad,onMapLegendHide,onLayersUpdate,onMarkerOver,onMarkerOut,onMarkerSelect,onMarkerRemoveSelection,onMapItemSelect),
 			_list = new List("#playlist","#search","#filter-content",configOptions.dataFields,onListLoad,onListGetTitleAttr,onListSelect,onListHighlight,onListRemoveHighlight,onListSearch);
 
 			loadMap();
@@ -189,6 +189,21 @@ define(["dojo/has",
 				_map.resizeMap();
 			}
 		}
+
+		// Christmas Music Addon
+
+		function onMapItemSelect(graphic,isHighlight)
+		{
+			if (isHighlight){
+				$("#audio-pane").empty().append('<audio controls autoplay>\
+					<source class="audio-source" src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg">\
+					<embed class="audio-source" height="50" width="100" src="'+ graphic.attributes.Audio_Link +'">\
+				</audio>');
+			}
+			console.log(graphic);
+		}
+
+		// Christmas music end
 
 		function updateText(title,subtitle,description)
 		{

@@ -42,7 +42,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 	* Class to define a new map for the playlist template
 	*/
 
-	return function PlaylistMap(isMobile,geometryServiceURL,bingMapsKey,webmapId,excludedLayers,dataFields,displayLegend,playlistLegendConfig,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection)
+	return function PlaylistMap(isMobile,geometryServiceURL,bingMapsKey,webmapId,excludedLayers,dataFields,displayLegend,playlistLegendConfig,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection,onItemSelect)
 	{
 		var _mapConfig = new MapConfig(),
 		_map,
@@ -61,7 +61,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 			var popup;
 
-			if (true || has("touch") && domGeom.position(query("body")[0]).w < 768){
+			if (has("touch") && domGeom.position(query("body")[0]).w < 768){
 				popup = new PopupMobile(null,domConstruct.create("div"));
 			}
 			else{
@@ -136,6 +136,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					};
 
 					onSelect(item);
+					onItemSelect(graphic,false);
 				});
 
 			});
@@ -208,6 +209,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				layer.queryFeatures(query,function(result){
 					var graphic = result.features[0];
 					_lastHightlighedGraphic = graphic;
+					onItemSelect(graphic,true);
 
 					if (graphic.getNode() && domGeom.position(graphic.getNode()).x > getSidePanelWidth()){
 						
@@ -524,6 +526,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 					showMapTip(event.graphic,titleAttr);
 
+					onItemSelect(event.graphic,true);
 					onHighlight(item);
 				});
 
