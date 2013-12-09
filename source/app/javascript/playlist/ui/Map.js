@@ -129,6 +129,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					_highlightEnabled = false;
 				});
 
+<<<<<<< HEAD
 				on(popup,"set-features",function(){
 					var graphic = popup.getSelectedFeature();
 					var item = {
@@ -140,6 +141,8 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					onItemSelect(graphic,false);
 				});
 
+=======
+>>>>>>> origin/master
 				on(popup,"selection-change",function(){
 					var graphic = popup.getSelectedFeature();
 
