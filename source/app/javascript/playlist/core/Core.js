@@ -3,7 +3,8 @@ define(["dojo/has",
 	"storymaps/playlist/core/mobile/Layout",
 	"storymaps/playlist/ui/Map",
 	"storymaps/playlist/ui/List",
-	"lib/jquery/jquery-1.10.2.min"],
+	"lib/jquery/jquery-1.10.2.min",
+	"lib/audio.min"],
 	function(has,
 		Helper,
 		MobileLayout,
@@ -60,6 +61,8 @@ define(["dojo/has",
 			_list = new List("#playlist","#search","#filter-content",configOptions.dataFields,onListLoad,onListGetTitleAttr,onListSelect,onListHighlight,onListRemoveHighlight,onListSearch);
 
 			loadMap();
+
+			audiojs.settings.css = "";
 		}
 
 
@@ -194,13 +197,28 @@ define(["dojo/has",
 
 		function onMapItemSelect(graphic,isHighlight)
 		{
-			if (isHighlight){
-				$("#audio-pane").empty().append('<audio controls autoplay>\
-					<source class="audio-source" src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg">\
-					<embed class="audio-source" height="50" width="100" src="'+ graphic.attributes.Audio_Link +'">\
-				</audio>');
+			if (graphic){
+				if (!isHighlight){
+					$(".esriPopup .mainSection").append('<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>');
+					setTimeout(function(){
+						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src")){
+							var player = audiojs.create(document.getElementById("popup-audio"),{
+								imageLocation: "resources/tools/audiojs/player-graphics.gif",
+								swfLocation: "resources/tools/audiojs/audiojs.swf"
+							});
+							setTimeout(function(){
+								$(".popup-audio-wrapper .audiojs .scrubber").css({
+									width: $(".popup-audio-wrapper").width() - $(".popup-audio-wrapper .audiojs .play-pause").outerWidth() - 20
+								});
+								player.play();
+							},200);
+						}
+					},100);					
+				}
 			}
-			console.log(graphic);
+			else{
+				$(".popup-audio-wrapper").remove();
+			}
 		}
 
 		// Christmas music end

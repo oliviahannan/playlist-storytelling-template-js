@@ -122,6 +122,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				on(popup,"hide",function(){
 					_highlightEnabled = true;
 					onRemoveSelection();
+					onItemSelect(false,false);
 				});
 
 				on(popup,"show",function(){
@@ -129,20 +130,6 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					_highlightEnabled = false;
 				});
 
-<<<<<<< HEAD
-				on(popup,"set-features",function(){
-					var graphic = popup.getSelectedFeature();
-					var item = {
-						layerId: (graphic.getLayer() ? graphic.getLayer().id : _tempLayerId),
-						objectId: (graphic.getLayer() ? graphic.attributes[graphic.getLayer().objectIdField] : _tempObjectId)
-					};
-
-					onSelect(item);
-					onItemSelect(graphic,false);
-				});
-
-=======
->>>>>>> origin/master
 				on(popup,"selection-change",function(){
 					var graphic = popup.getSelectedFeature();
 
@@ -154,6 +141,8 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 						};
 
 						onSelect(item);
+						// console.log(popup);
+						onItemSelect(graphic,false);
 					}
 				});
 
