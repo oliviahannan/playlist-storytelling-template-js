@@ -63,6 +63,29 @@ define(["dojo/_base/array",
 			$(".playlist-item").removeClass("selected");
 		};
 
+		this.selectNext = function()
+		{
+			if ($(".playlist-item.selected").length > 0 && $(".playlist-item.selected").next().length > 0){
+				var el = $(".playlist-item.selected").next();
+				$(".playlist-item").removeClass("selected");
+				el.addClass("selected");
+				var item = {
+					layerId: el.attr("layer-id"),
+					objectId: el.attr("object-id")
+				};
+				onSelect(item,false);
+			}
+			else{
+				var el = $(".playlist-item").first();
+				el.addClass("selected");
+				var item = {
+					layerId: el.attr("layer-id"),
+					objectId: el.attr("object-id")
+				};
+				onSelect(item,false);
+			}
+		};
+
 		function addSearchEvents()
 		{
 			if (searchSelector){

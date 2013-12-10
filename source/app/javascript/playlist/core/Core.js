@@ -29,7 +29,8 @@ define(["dojo/has",
 		},
 		_layersReady = 0,
 		_map,
-		_list;
+		_list,
+		_audioTour = false;
 
 		function init ()
 		{
@@ -204,7 +205,12 @@ define(["dojo/has",
 						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src")){
 							var player = audiojs.create(document.getElementById("popup-audio"),{
 								imageLocation: "resources/tools/audiojs/player-graphics.gif",
-								swfLocation: "resources/tools/audiojs/audiojs.swf"
+								swfLocation: "resources/tools/audiojs/audiojs.swf",
+								trackEnded: function(){
+									if (_audioTour){
+										startAudioTour();
+									}
+								}
 							});
 							setTimeout(function(){
 								$(".popup-audio-wrapper .audiojs .scrubber").css({
@@ -219,6 +225,11 @@ define(["dojo/has",
 			else{
 				$(".popup-audio-wrapper").remove();
 			}
+		}
+
+		function startAudioTour(){
+			_audioTour = true;
+			_list.selectNext();
 		}
 
 		// Christmas music end
@@ -237,6 +248,13 @@ define(["dojo/has",
 			else{
 				$("#side-pane-controls .toggle-description").hide();
 			}
+
+			$("#description").append('<button id="audio-tour" class="btn small">Start audio tour</button>');
+			$("#audio-tour").click(function(){
+				if (!_audioTour){
+					startAudioTour();
+				}
+			});
 		}
 
 		function checkReadyState()
