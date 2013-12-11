@@ -209,19 +209,15 @@ define(["dojo/has",
 						if ($(".esriMobileInfoView").is(":visible")){
 							$(".esriMobileInfoView .mainSection").append(mobileAudioEl);
 						}
-						else{
-							$("body").append(mobileAudioEl);							
-						}
 					}
 					else if(has("touch")){
-						alert("test");
 						$(".esriPopup .mainSection").append(mobileAudioEl);
 					}
 					else{
 						$(".esriPopup .mainSection").append(audioEl);
 					}
 					setTimeout(function(){
-						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src") && !mobilePopup){
+						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src") && !mobilePopup && !has("touch")){
 							var player = audiojs.create(document.getElementById("popup-audio"),{
 								imageLocation: "http://storymaps.esri.com/stories/2013/holiday-music/resources/tools/audiojs/player-graphics.gif",
 								swfLocation: "http://storymaps.esri.com/stories/2013/holiday-music/resources/tools/audiojs/audiojs.swf",
@@ -249,13 +245,12 @@ define(["dojo/has",
 			}
 			else{
 				if (mobilePopup){
+					$(".popup-audio-wrapper").remove();
 					setTimeout(function(){
-						if (!$(".esriMobileInfoView").is(":visible")){
-							$(".popup-audio-wrapper").remove();
-						}
-						else{
+						if ($(".esriMobileInfoView").is(":visible")){
 							setTimeout(function(){
-								$(".esriMobileInfoView .mainSection").append($(".popup-audio-wrapper"));
+								var mobileAudioEl1 = '<div class="popup-audio-wrapper"><audio id="popup-audio" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
+								$(".esriMobileInfoView .mainSection").append($(".esriMobileInfoView .mainSection").append(mobileAudioEl1));
 							},500);
 						}
 					},100);
