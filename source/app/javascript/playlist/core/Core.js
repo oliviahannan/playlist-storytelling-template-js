@@ -253,10 +253,9 @@ define(["dojo/has",
 					setTimeout(function(){
 						if ($(".esriMobileInfoView").is(":visible")){
 							setTimeout(function(){
-								alert("open");
 								var mobileAudioEl1 = '<div class="popup-audio-wrapper"><audio id="popup-audio" controls src="'+ _currentAudio +'" type="audio/mpeg"></audio></div>';
 								$(".esriMobileInfoView .mainSection").append($(".esriMobileInfoView .mainSection").append(mobileAudioEl1));
-							},500);
+							},1000);
 						}
 					},100);
 				}
