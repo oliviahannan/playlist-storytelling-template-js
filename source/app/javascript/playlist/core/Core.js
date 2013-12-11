@@ -204,8 +204,17 @@ define(["dojo/has",
 				if (!isHighlight){
 					$(".popup-audio-wrapper").remove();
 					var audioEl = '<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
+					var mobileAudioEl = '<div class="popup-audio-wrapper"><audio id="popup-audio" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
 					if (mobilePopup){
-						$("body").append('<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" autoplay src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>');
+						if ($(".esriMobileInfoView").is(":visible")){
+							$(".esriMobileInfoView .mainSection").append(mobileAudioEl);
+						}
+						else{
+							$("body").append(mobileAudioEl);							
+						}
+					}
+					else if(has("touch")){
+						$(".esriPopup .mainSection").append(mobilePopup);
 					}
 					else{
 						$(".esriPopup .mainSection").append(audioEl);
@@ -242,6 +251,9 @@ define(["dojo/has",
 					setTimeout(function(){
 						if (!$(".esriMobileInfoView").is(":visible")){
 							$(".popup-audio-wrapper").remove();
+						}
+						else{
+							$(".esriMobileInfoView .mainSection").append($(".popup-audio-wrapper"));
 						}
 					},100);
 				}
@@ -289,7 +301,7 @@ define(["dojo/has",
 				$("#side-pane-controls .toggle-description").hide();
 			}
 
-			if(!has("touch") && $("body").width >= 768){
+			if(!has("touch") && $("body").width() >= 768){
 				$("#description").append('<button id="audio-tour" class="btn small">Start audio tour</button>');
 				$("#audio-tour").click(function(){
 					if (!_audioTour){
@@ -299,9 +311,6 @@ define(["dojo/has",
 						pausetAudioTour();
 					}
 				});
-			}
-			else{
-				$("body").addClass("hidden-audio");
 			}
 
 			$(".esriMobileNavigationItem.left").click(function(){
