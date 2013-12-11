@@ -172,6 +172,7 @@ define(["dojo/_base/array",
 											</td>\
 											<td class="title-cell">\
 												<h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6>\
+												<h6 class="item-region">' + item.graphic.attributes.Region + '</h6>\
 											</td>\
 										</tr>\
 									</tbody>\
@@ -190,6 +191,7 @@ define(["dojo/_base/array",
 											</td>\
 											<td class="title-cell">\
 												<h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6>\
+												<h6 class="item-region">' + item.graphic.attributes.Region + '</h6>\
 											</td>\
 										</tr>\
 									</tbody>\

@@ -1,7 +1,13 @@
 #audio-tour{
 	padding: .3em 1.25em .3em;
 	margin-top: 15px;
+}
 
+.item-region{	
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-bottom: 0;
 }
 
 .popup-audio-wrapper{

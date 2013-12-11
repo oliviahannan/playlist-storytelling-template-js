@@ -218,8 +218,8 @@ define(["dojo/has",
 					setTimeout(function(){
 						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src")){
 							var player = audiojs.create(document.getElementById("popup-audio"),{
-								imageLocation: "resources/tools/audiojs/player-graphics.gif",
-								swfLocation: "resources/tools/audiojs/audiojs.swf",
+								imageLocation: location.origin + location.pathname + "resources/tools/audiojs/player-graphics.gif",
+								swfLocation: location.origin + location.pathname + "resources/tools/audiojs/audiojs.swf",
 								trackEnded: function(){
 									if (_audioTour && $(".playlist-item.selected").length > 0){
 										startAudioTour();
