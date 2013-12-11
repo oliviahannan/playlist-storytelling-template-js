@@ -32,7 +32,8 @@ define(["dojo/has",
 		_list,
 		_audioTour = false,
 		_currentPlayer,
-		_lastTourItem;
+		_lastTourItem,
+		_currentAudio;
 
 		function init ()
 		{
@@ -205,6 +206,9 @@ define(["dojo/has",
 					$(".popup-audio-wrapper").remove();
 					var audioEl = '<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
 					var mobileAudioEl = '<div class="popup-audio-wrapper"><audio id="popup-audio" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
+
+					_currentAudio = graphic.attributes.Audio_Link;
+
 					if (mobilePopup){
 						if ($(".esriMobileInfoView").is(":visible")){
 							$(".esriMobileInfoView .mainSection").append(mobileAudioEl);
@@ -249,7 +253,7 @@ define(["dojo/has",
 					setTimeout(function(){
 						if ($(".esriMobileInfoView").is(":visible")){
 							setTimeout(function(){
-								var mobileAudioEl1 = '<div class="popup-audio-wrapper"><audio id="popup-audio" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
+								var mobileAudioEl1 = '<div class="popup-audio-wrapper"><audio id="popup-audio" controls src="'+ _currentAudio +'" type="audio/mpeg"></audio></div>';
 								$(".esriMobileInfoView .mainSection").append($(".esriMobileInfoView .mainSection").append(mobileAudioEl1));
 							},500);
 						}
