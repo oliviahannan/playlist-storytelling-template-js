@@ -214,7 +214,8 @@ define(["dojo/has",
 						}
 					}
 					else if(has("touch")){
-						$(".esriPopup .mainSection").append(mobilePopup);
+						alert("test");
+						$(".esriPopup .mainSection").append(mobileAudioEl);
 					}
 					else{
 						$(".esriPopup .mainSection").append(audioEl);
@@ -253,7 +254,9 @@ define(["dojo/has",
 							$(".popup-audio-wrapper").remove();
 						}
 						else{
-							$(".esriMobileInfoView .mainSection").append($(".popup-audio-wrapper"));
+							setTimeout(function(){
+								$(".esriMobileInfoView .mainSection").append($(".popup-audio-wrapper"));
+							},500);
 						}
 					},100);
 				}
