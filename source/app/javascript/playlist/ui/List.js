@@ -66,23 +66,23 @@ define(["dojo/_base/array",
 		this.selectNext = function()
 		{
 			if ($(".playlist-item.selected").length > 0 && $(".playlist-item.selected").next().length > 0){
-				var el = $(".playlist-item.selected").next();
+				var element = $(".playlist-item.selected").next();
 				$(".playlist-item").removeClass("selected");
-				el.addClass("selected");
-				var item = {
-					layerId: el.attr("layer-id"),
-					objectId: el.attr("object-id")
+				element.addClass("selected");
+				var item1 = {
+					layerId: element.attr("layer-id"),
+					objectId: element.attr("object-id")
 				};
-				onSelect(item,false);
+				onSelect(item1,false);
 			}
 			else{
-				var el = $(".playlist-item").first();
-				el.addClass("selected");
-				var item = {
-					layerId: el.attr("layer-id"),
-					objectId: el.attr("object-id")
+				var element2 = $(".playlist-item").first();
+				element2.addClass("selected");
+				var item2 = {
+					layerId: element2.attr("layer-id"),
+					objectId: element2.attr("object-id")
 				};
-				onSelect(item,false);
+				onSelect(item2,false);
 			}
 		};
 

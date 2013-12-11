@@ -32,7 +32,8 @@
 		"iScroll": false,
 		"self": false,
 		"Snap": false,
-		"ZeroClipboard": false
+		"ZeroClipboard": false,
+		"audiojs": false
 	},
 	
 	"expr": true,

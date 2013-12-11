@@ -30,7 +30,9 @@ define(["dojo/has",
 		_layersReady = 0,
 		_map,
 		_list,
-		_audioTour = false;
+		_audioTour = false,
+		_currentPlayer,
+		_lastTourItem;
 
 		function init ()
 		{
@@ -196,22 +198,40 @@ define(["dojo/has",
 
 		// Christmas Music Addon
 
-		function onMapItemSelect(graphic,isHighlight)
+		function onMapItemSelect(graphic,isHighlight,mobilePopup,item)
 		{
 			if (graphic){
 				if (!isHighlight){
-					$(".esriPopup .mainSection").append('<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>');
+					$(".popup-audio-wrapper").remove();
+					var audioEl = '<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
+					if (mobilePopup){
+						if ($(".esriMobileInfoView").is(":visible")){
+							$(".esriMobileInfoView .mainSection").append(audioEl);
+						}
+						else{
+							$("body").append(audioEl);
+						}
+					}
+					else{
+						$(".esriPopup .mainSection").append(audioEl);
+					}
 					setTimeout(function(){
 						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src")){
 							var player = audiojs.create(document.getElementById("popup-audio"),{
 								imageLocation: "resources/tools/audiojs/player-graphics.gif",
 								swfLocation: "resources/tools/audiojs/audiojs.swf",
 								trackEnded: function(){
-									if (_audioTour){
+									if (_audioTour && $(".playlist-item.selected").length > 0){
+										startAudioTour();
+									}
+									else if (_audioTour){
+										_list.select(item);
 										startAudioTour();
 									}
 								}
 							});
+							_currentPlayer = player;
+							_lastTourItem = item;
 							setTimeout(function(){
 								$(".popup-audio-wrapper .audiojs .scrubber").css({
 									width: $(".popup-audio-wrapper").width() - $(".popup-audio-wrapper .audiojs .play-pause").outerWidth() - 20
@@ -219,17 +239,50 @@ define(["dojo/has",
 								player.play();
 							},200);
 						}
-					},100);					
+					},200);					
 				}
 			}
 			else{
-				$(".popup-audio-wrapper").remove();
+				if (mobilePopup){
+					setTimeout(function(){
+						if (!$(".esriMobileInfoView").is(":visible")){
+							$(".popup-audio-wrapper").remove();
+							pausetAudioTour();
+						}
+						else{
+							$(".esriMobileInfoView .mainSection").append($(".popup-audio-wrapper"));
+							$(".popup-audio-wrapper .audiojs .scrubber").css({
+								width: $(".popup-audio-wrapper").width() - $(".popup-audio-wrapper .audiojs .play-pause").outerWidth() - 20
+							});
+							_currentPlayer.play();
+						}
+					},100);
+				}
+				else {
+					$(".popup-audio-wrapper").remove();
+					setTimeout(function(){
+						if (!$(".popup-audio-wrapper").is(":visible")){
+							pausetAudioTour();
+						}
+					},500);
+				}
 			}
+
 		}
 
 		function startAudioTour(){
 			_audioTour = true;
+			if (_lastTourItem && $(".playlist-item.selected").length < 1){
+				_list.select(_lastTourItem);
+			}
 			_list.selectNext();
+			$("#audio-tour").html("Pause audio tour");
+		}
+
+		function pausetAudioTour(){
+			_audioTour = false;
+			_currentPlayer.pause();
+			$("#audio-tour").html("Start Audio Tour");
 		}
 
 		// Christmas music end
@@ -254,6 +307,13 @@ define(["dojo/has",
 				if (!_audioTour){
 					startAudioTour();
 				}
+				else{
+					pausetAudioTour();
+				}
+			});
+			$(".esriMobileNavigationItem.left").click(function(){
+				$(".popup-audio-wrapper").remove();
+				$(".playlist-item").removeClass("selected");
 			});
 		}
 

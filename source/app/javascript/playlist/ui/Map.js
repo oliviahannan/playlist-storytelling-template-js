@@ -56,7 +56,8 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 		_titleFields = {},
 		_lastHightlighedGraphic,
 		_tempLayerId,
-		_tempObjectId;
+		_tempObjectId,
+		_mobilePopup = false;
 
 		this.init = function(){
 
@@ -64,6 +65,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 			if (has("touch") && domGeom.position(query("body")[0]).w < 768){
 				popup = new PopupMobile(null,domConstruct.create("div"));
+				_mobilePopup = true;
 			}
 			else{
 				popup = new Popup(null,domConstruct.create("div"));
@@ -122,7 +124,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				on(popup,"hide",function(){
 					_highlightEnabled = true;
 					onRemoveSelection();
-					onItemSelect(false,false);
+					onItemSelect(false,false,_mobilePopup);
 				});
 
 				on(popup,"show",function(){
@@ -131,18 +133,22 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				});
 
 				on(popup,"selection-change",function(){
-					var graphic = popup.getSelectedFeature();
+					if (popup.features && popup.features instanceof Array && popup.features.length > 1){
+						popup.setFeatures([popup.getSelectedFeature()]);
+					}
+					else if (popup.features && popup.features instanceof Array && popup.features.length === 1){
+						var graphic = popup.getSelectedFeature();
 
-					if (graphic){						
-						onRemoveSelection();
-						var item = {
-							layerId: (graphic.getLayer() ? graphic.getLayer().id : _tempLayerId),
-							objectId: (graphic.getLayer() ? graphic.attributes[graphic.getLayer().objectIdField] : _tempObjectId)
-						};
+						if (graphic){
+							onRemoveSelection();
+							var item = {
+								layerId: (graphic.getLayer() ? graphic.getLayer().id : _tempLayerId),
+								objectId: (graphic.getLayer() ? graphic.attributes[graphic.getLayer().objectIdField] : _tempObjectId)
+							};
 
-						onSelect(item);
-						// console.log(popup);
-						onItemSelect(graphic,false);
+							onSelect(item);
+							onItemSelect(graphic,false,_mobilePopup,item);
+						}
 					}
 				});
 
@@ -216,7 +222,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				layer.queryFeatures(query,function(result){
 					var graphic = result.features[0];
 					_lastHightlighedGraphic = graphic;
-					onItemSelect(graphic,true);
+					onItemSelect(graphic,true,_mobilePopup);
 
 					if (graphic.getNode() && domGeom.position(graphic.getNode()).x > getSidePanelWidth()){
 						
@@ -535,7 +541,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 					showMapTip(event.graphic,titleAttr);
 
-					onItemSelect(event.graphic,true);
+					onItemSelect(event.graphic,true,_mobilePopup);
 					onHighlight(item);
 				});
 
