@@ -133,10 +133,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				});
 
 				on(popup,"selection-change",function(){
-					if (popup.features && popup.features instanceof Array && popup.features.length > 1){
-						popup.setFeatures([popup.getSelectedFeature()]);
-					}
-					else if (popup.features && popup.features instanceof Array && popup.features.length === 1){
+					if (_mobilePopup){
 						var graphic = popup.getSelectedFeature();
 
 						if (graphic){
@@ -148,6 +145,23 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 							onSelect(item);
 							onItemSelect(graphic,false,_mobilePopup,item);
+						}
+					}
+					else if (popup.features && popup.features instanceof Array && popup.features.length > 1){
+						popup.setFeatures([popup.getSelectedFeature()]);
+					}
+					else if (popup.features && popup.features instanceof Array && popup.features.length === 1){
+						var grp1 = popup.getSelectedFeature();
+
+						if (grp1){
+							onRemoveSelection();
+							var item1 = {
+								layerId: (grp1.getLayer() ? grp1.getLayer().id : _tempLayerId),
+								objectId: (grp1.getLayer() ? grp1.attributes[grp1.getLayer().objectIdField] : _tempObjectId)
+							};
+
+							onSelect(item1);
+							onItemSelect(grp1,false,_mobilePopup,item1);
 						}
 					}
 				});

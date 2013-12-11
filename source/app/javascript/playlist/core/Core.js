@@ -205,21 +205,16 @@ define(["dojo/has",
 					$(".popup-audio-wrapper").remove();
 					var audioEl = '<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" controls src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>';
 					if (mobilePopup){
-						if ($(".esriMobileInfoView").is(":visible")){
-							$(".esriMobileInfoView .mainSection").append(audioEl);
-						}
-						else{
-							$("body").append(audioEl);
-						}
+						$("body").append('<div class="popup-audio-wrapper"><audio id="popup-audio" style="display:none;" autoplay src="'+ graphic.attributes.Audio_Link +'" type="audio/mpeg"></audio></div>');
 					}
 					else{
 						$(".esriPopup .mainSection").append(audioEl);
 					}
 					setTimeout(function(){
-						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src")){
+						if(graphic.attributes.Audio_Link === $("#popup-audio").attr("src") && !mobilePopup){
 							var player = audiojs.create(document.getElementById("popup-audio"),{
-								imageLocation: location.origin + location.pathname + "resources/tools/audiojs/player-graphics.gif",
-								swfLocation: location.origin + location.pathname + "resources/tools/audiojs/audiojs.swf",
+								imageLocation: "http://storymaps.esri.com/stories/2013/holiday-music/resources/tools/audiojs/player-graphics.gif",
+								swfLocation: "http://storymaps.esri.com/stories/2013/holiday-music/resources/tools/audiojs/audiojs.swf",
 								trackEnded: function(){
 									if (_audioTour && $(".playlist-item.selected").length > 0){
 										startAudioTour();
@@ -247,14 +242,6 @@ define(["dojo/has",
 					setTimeout(function(){
 						if (!$(".esriMobileInfoView").is(":visible")){
 							$(".popup-audio-wrapper").remove();
-							pausetAudioTour();
-						}
-						else{
-							$(".esriMobileInfoView .mainSection").append($(".popup-audio-wrapper"));
-							$(".popup-audio-wrapper .audiojs .scrubber").css({
-								width: $(".popup-audio-wrapper").width() - $(".popup-audio-wrapper .audiojs .play-pause").outerWidth() - 20
-							});
-							_currentPlayer.play();
 						}
 					},100);
 				}
@@ -302,15 +289,21 @@ define(["dojo/has",
 				$("#side-pane-controls .toggle-description").hide();
 			}
 
-			$("#description").append('<button id="audio-tour" class="btn small">Start audio tour</button>');
-			$("#audio-tour").click(function(){
-				if (!_audioTour){
-					startAudioTour();
-				}
-				else{
-					pausetAudioTour();
-				}
-			});
+			if(!has("touch") && $("body").width >= 768){
+				$("#description").append('<button id="audio-tour" class="btn small">Start audio tour</button>');
+				$("#audio-tour").click(function(){
+					if (!_audioTour){
+						startAudioTour();
+					}
+					else{
+						pausetAudioTour();
+					}
+				});
+			}
+			else{
+				$("body").addClass("hidden-audio");
+			}
+
 			$(".esriMobileNavigationItem.left").click(function(){
 				$(".popup-audio-wrapper").remove();
 				$(".playlist-item").removeClass("selected");
