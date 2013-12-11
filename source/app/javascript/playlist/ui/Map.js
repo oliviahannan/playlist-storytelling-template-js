@@ -63,7 +63,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 			var popup;
 
-			if (true || has("touch") && domGeom.position(query("body")[0]).w < 768){
+			if (has("touch") && domGeom.position(query("body")[0]).w < 768){
 				popup = new PopupMobile(null,domConstruct.create("div"));
 				_mobilePopup = true;
 			}
