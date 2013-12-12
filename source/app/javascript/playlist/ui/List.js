@@ -97,7 +97,9 @@ define(["dojo/_base/array",
 						var result = $.grep($(".playlist-item"),function(el){
 							var titleMatch = $(el).find(".item-title div").html().match(regex);
 							var locationMatch = $(el).find(".item-region").html().match(regex);
-							var resultElements = titleMatch + locationMatch;
+							var albumMatch = $(el).attr("data-album").match(regex);
+							var artistMatch = $(el).attr("data-artist").match(regex);
+							var resultElements = titleMatch + locationMatch + albumMatch + artistMatch;
 							return resultElements;
 						});
 
@@ -163,7 +165,7 @@ define(["dojo/_base/array",
 					var itemStr = "";
 					if (attr.thumbnail){
 						itemStr = '\
-							<div class="playlist-item" layer-id="' + layerId + '" object-id="' + objId + '" data-filter="' + item.filter + '">\
+							<div class="playlist-item" layer-id="' + layerId + '" object-id="' + objId + '" data-filter="' + item.filter + '" data-album="' + item.graphic.attributes.Album + '" data-artist="' + item.graphic.attributes.Artist + '">\
 								<table>\
 									<tbody>\
 										<tr>\
@@ -185,7 +187,7 @@ define(["dojo/_base/array",
 					}
 					else{
 						itemStr = '\
-							<div class="playlist-item no-image" layer-id="' + layerId + '" object-id="' + objId + '" data-filter="' + item.filter + '">\
+							<div class="playlist-item no-image" layer-id="' + layerId + '" object-id="' + objId + '" data-filter="' + item.filter + '" data-album="' + item.graphic.attributes.Album + '" data-artist="' + item.graphic.attributes.Artist + '">\
 								<table>\
 									<tbody>\
 										<tr>\
