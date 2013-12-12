@@ -147,21 +147,35 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 							onItemSelect(graphic,false,_mobilePopup,item);
 						}
 					}
-					else if (popup.features && popup.features instanceof Array && popup.features.length > 1){
+					else if (has("touch") && popup.features && popup.features instanceof Array && popup.features.length > 1){
 						popup.setFeatures([popup.getSelectedFeature()]);
 					}
-					else if (popup.features && popup.features instanceof Array && popup.features.length === 1){
+					else if (has("touch") && popup.features && popup.features instanceof Array && popup.features.length === 1){
 						var grp1 = popup.getSelectedFeature();
 
 						if (grp1){
 							onRemoveSelection();
-							var item1 = {
+							var item2 = {
 								layerId: (grp1.getLayer() ? grp1.getLayer().id : _tempLayerId),
 								objectId: (grp1.getLayer() ? grp1.attributes[grp1.getLayer().objectIdField] : _tempObjectId)
 							};
 
-							onSelect(item1);
+							onSelect(item2);
 							onItemSelect(grp1,false,_mobilePopup,item1);
+						}
+					}
+					else{
+						var grp2 = popup.getSelectedFeature();
+
+						if (grp2){
+							onRemoveSelection();
+							var item1 = {
+								layerId: (grp2.getLayer() ? grp2.getLayer().id : _tempLayerId),
+								objectId: (grp2.getLayer() ? grp2.attributes[grp2.getLayer().objectIdField] : _tempObjectId)
+							};
+
+							onSelect(item1);
+							onItemSelect(grp2,false,_mobilePopup,item1);
 						}
 					}
 				});

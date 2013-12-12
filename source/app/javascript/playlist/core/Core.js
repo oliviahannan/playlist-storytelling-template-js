@@ -283,7 +283,7 @@ define(["dojo/has",
 		function pausetAudioTour(){
 			_audioTour = false;
 			_currentPlayer.pause();
-			$("#audio-tour").html("Start Audio Tour");
+			$("#audio-tour").html("Resume Audio Tour");
 		}
 
 		// Christmas music end
@@ -319,6 +319,12 @@ define(["dojo/has",
 				$(".popup-audio-wrapper").remove();
 				$(".playlist-item").removeClass("selected");
 			});
+
+			if(!has("touch")){
+				$(".titleButton.next, .titleButton.prev").mouseup(function(){
+					$(".popup-audio-wrapper").remove();
+				});
+			}
 		}
 
 		function checkReadyState()

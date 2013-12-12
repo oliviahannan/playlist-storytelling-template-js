@@ -95,7 +95,10 @@ define(["dojo/_base/array",
 						var regex = new RegExp($.ui.autocomplete.escapeRegex(request.term),"i");
 
 						var result = $.grep($(".playlist-item"),function(el){
-							return ($(el).find(".item-title div").html().match(regex));
+							var titleMatch = $(el).find(".item-title div").html().match(regex);
+							var locationMatch = $(el).find(".item-region").html().match(regex);
+							var resultElements = titleMatch + locationMatch;
+							return resultElements;
 						});
 
 						_searchResults = result;
