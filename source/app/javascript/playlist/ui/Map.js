@@ -133,50 +133,17 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				});
 
 				on(popup,"selection-change",function(){
-					if (_mobilePopup){
-						var graphic = popup.getSelectedFeature();
+					var graphic = popup.getSelectedFeature();
 
-						if (graphic){
-							onRemoveSelection();
-							var item = {
-								layerId: (graphic.getLayer() ? graphic.getLayer().id : _tempLayerId),
-								objectId: (graphic.getLayer() ? graphic.attributes[graphic.getLayer().objectIdField] : _tempObjectId)
-							};
+					if (graphic){
+						onRemoveSelection();
+						var item = {
+							layerId: (graphic.getLayer() ? graphic.getLayer().id : _tempLayerId),
+							objectId: (graphic.getLayer() ? graphic.attributes[graphic.getLayer().objectIdField] : _tempObjectId)
+						};
 
-							onSelect(item);
-							onItemSelect(graphic,false,_mobilePopup,item);
-						}
-					}
-					else if (has("touch") && popup.features && popup.features instanceof Array && popup.features.length > 1){
-						popup.setFeatures([popup.getSelectedFeature()]);
-					}
-					else if (has("touch") && popup.features && popup.features instanceof Array && popup.features.length === 1){
-						var grp1 = popup.getSelectedFeature();
-
-						if (grp1){
-							onRemoveSelection();
-							var item2 = {
-								layerId: (grp1.getLayer() ? grp1.getLayer().id : _tempLayerId),
-								objectId: (grp1.getLayer() ? grp1.attributes[grp1.getLayer().objectIdField] : _tempObjectId)
-							};
-
-							onSelect(item2);
-							onItemSelect(grp1,false,_mobilePopup,item1);
-						}
-					}
-					else{
-						var grp2 = popup.getSelectedFeature();
-
-						if (grp2){
-							onRemoveSelection();
-							var item1 = {
-								layerId: (grp2.getLayer() ? grp2.getLayer().id : _tempLayerId),
-								objectId: (grp2.getLayer() ? grp2.attributes[grp2.getLayer().objectIdField] : _tempObjectId)
-							};
-
-							onSelect(item1);
-							onItemSelect(grp2,false,_mobilePopup,item1);
-						}
+						onSelect(item);
+						onItemSelect(graphic,false,_mobilePopup,item);
 					}
 				});
 
