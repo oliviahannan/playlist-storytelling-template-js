@@ -20,7 +20,7 @@ define(["dojo/has","lib/ZeroClipboard.min","lib/jquery/jquery-1.10.2.min"],
 		summary: _page.summary,
 		url: _page.url,
 		thumbnail: _page.thumbnail,
-		twitterText: _page.title,
+		twitterText: "Celebrate the holidays with this “singing map” of festive music from around the world.",
 		twitterHandle: _page.twitterHandle,
 		hashtags: 'storymap'
 	};

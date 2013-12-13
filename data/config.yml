@@ -1,7 +1,7 @@
 # GOOGLE ANALYTICS
 
 # Include Google Analytics
-includeAnalytics: false
+includeAnalytics: true
 # Google Analytics Tracking ID
 trackingId: UA-26529417-1
 
@@ -9,17 +9,17 @@ trackingId: UA-26529417-1
 # META & OPENGRAPH TAGS
 
 # title of story map
-metaTitle: Playlist
+metaTitle: Smithsonian Folkways Holiday Music Map
 # Author of story map
-metaAuthor: Esri
+metaAuthor: Esri and Smithsonian Folkways
 # Keywords to define story map
 metaKeywords: Story Map
 # Description of story map
-metaDescription: Add description for app
+metaDescription: "A 'singing map' featuring traditional holiday music from the collection of Smithsonian Folkways Recordings, the nonprofit record label of the national museum of the United States."
 # Permanent URL of app. Will be used as default URL when shared on Facebook and Twitter
-metaSocialURL: http://storymaps.esri.com
+metaSocialURL: http://storymaps.esri.com/stories/2013/holiday-music/
 # Permanent URL of app thumbnail. This is the thumbnail to be used when app is shared to Facebook and Twitter
-metaThumbnailURL: http://sample.com/thumbnail.png
+metaThumbnailURL: http://storymaps.esri.com/stories/2013/holiday-music/resources/images/thumbnail.jpg
 # Website/Organization's name to be used in sharing to Facebook and Twitter
 metaSiteName: Esri
 # Twitter Handle to be used while sharing app on Twitter
