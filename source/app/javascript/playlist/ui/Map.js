@@ -407,6 +407,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 			}
 
 			// Get Color Attribute
+			console.log(lyr.graphics[0]);
 			var colorAttr;
 			if (dataFields.colorField){
 				colorAttr = dataFields.colorField;
@@ -423,29 +424,15 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 
 			// Get Order Attribute
 			var orderAttr;
-			if (dataFields.orderField){
-				orderAttr = dataFields.orderField;
-			}
-			else if (lyr.graphics[0] && lyr.graphics[0].attributes.Order){
-				orderAttr = "Order";
-			}
-			else if (lyr.graphics[0] && lyr.graphics[0].attributes.order){
-				orderAttr = "order";
-			}
-			else if (lyr.graphics[0] && lyr.graphics[0].attributes.ORDER){
-				orderAttr = "ORDER";
-			}
-			if (lyr.graphics.length > 1 && orderAttr){
-				lyr.graphics.sort(function(a,b){
-					if (a.attributes[orderAttr] < b.attributes[orderAttr]){
-						return -1;
-					}
-					if (a.attributes[orderAttr] > b.attributes[orderAttr]){
-						return 1;
-					}
-					return 0;
-				});
-			}
+			lyr.graphics.sort(function(a,b){
+				if (a.geometry.x < b.geometry.x){
+					return -1;
+				}
+				if (a.geometry.x > b.geometry.x){
+					return 1;
+				}
+				return 0;
+			});
 			var renderer = _mapConfig.getRenderer(layerObj,lyr.graphics,colorAttr,orderAttr);
 			var lyrItems = [];
 			var maxPoints = _mapConfig.getMaxAllowablePoints();
