@@ -39,6 +39,7 @@ define(["dojo/has",
 		{
 			if (_embed){
 				$("#banner").hide();
+				$("#side-pane-buffer").hide();
 			}
 			if (_mobile){
 				_mobileLayout = new MobileLayout(onMobileListOpen);
