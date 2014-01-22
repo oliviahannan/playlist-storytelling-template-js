@@ -51,3 +51,26 @@
 	right: 10px;
 	cursor: pointer;
 }
+
+#locate-button{
+	position: absolute;
+	right: 20px;
+	top: 125px;
+	z-index: 100;
+}
+
+.LocateButton .zoomLocateButton{
+	padding: 0;
+	background: url("http://cdn.arcgis.com/cdn/3684/js/esri/arcgisonline/map/css/images/home_locate.png") no-repeat -30px 0;
+	width: 30px;
+	height: 30px;
+	border: 2px solid #666;
+	background-color: #FFF;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	cursor: pointer;
+}
+
+.LocateButton .zoomLocateButton:hover{
+	background-color: #eee;
+}

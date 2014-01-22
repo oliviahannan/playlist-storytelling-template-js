@@ -3,6 +3,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 	"esri/dijit/Legend",
 	"esri/dijit/Popup",
 	"esri/dijit/PopupMobile",
+	"esri/dijit/LocateButton",
 	"dojo/dom",
 	"dojo/dom-class",
 	"dojo/dom-style",
@@ -24,6 +25,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 		Legend,
 		Popup,
 		PopupMobile,
+		LocateButton,
 		dom,
 		domClass,
 		domStyle,
@@ -92,6 +94,15 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				
 				_mapResponse = response;
 				_map = response.map;
+
+				var geoLocate = new LocateButton({
+					map: _map
+				},"locate-button");
+				geoLocate.startup();
+
+				geoLocate.on('locate',function(error){
+					console.log(error);
+				});
 
 				// ADD HOME BUTTON TO ZOOM SLIDER
 				on.once(_map,"extent-change",function(){
