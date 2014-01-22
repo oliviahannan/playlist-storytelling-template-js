@@ -61,7 +61,7 @@ define(["dojo/_base/array",
 					if (i < maxAllowablePoints){
 
 						if (!isNaN(grp.attributes[orderAttr]) && isFinite(grp.attributes[orderAttr]) && grp.attributes[orderAttr] % 1 === 0){
-							i = grp.attributes[orderAttr];
+							i = grp.attributes[orderAttr] - 1;
 						}
 						
 						var symbol = getSymbolForDefaultRenderer(grp,colorAttr,i);
@@ -96,13 +96,13 @@ define(["dojo/_base/array",
 			var iconURL;
 
 			if(graphic.attributes[colorAttr]){
-				if (graphic.attributes[colorAttr].toLowerCase === "b" || graphic.attributes[colorAttr].toLowerCase === "blue"){
+				if (graphic.attributes[colorAttr].toLowerCase() === "b" || graphic.attributes[colorAttr].toLowerCase() === "blue"){
 					iconURL = "resources/images/markers/indexed/blue/NumberIconb" + (index + 1) + ".png";
 				}
-				else if (graphic.attributes[colorAttr].toLowerCase === "g" || graphic.attributes[colorAttr].toLowerCase === "green"){
+				else if (graphic.attributes[colorAttr].toLowerCase() === "g" || graphic.attributes[colorAttr].toLowerCase() === "green"){
 					iconURL = "resources/images/markers/indexed/green/NumberIcong" + (index + 1) + ".png";
 				}
-				else if (graphic.attributes[colorAttr].toLowerCase === "p" || graphic.attributes[colorAttr].toLowerCase === "purple"){
+				else if (graphic.attributes[colorAttr].toLowerCase() === "p" || graphic.attributes[colorAttr].toLowerCase() === "purple"){
 					iconURL = "resources/images/markers/indexed/purple/IconPurple" + (index + 1) + ".png";
 				}
 				else{

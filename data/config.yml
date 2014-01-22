@@ -42,6 +42,8 @@ description: ""
 
 # LEGEND AND DESCRIPTION
 
+playlistLegendVisible: false
+
 # Playlist layer title
 playlistTitle: Application
 
@@ -83,8 +85,6 @@ customIconURL: resources/images/markers/simple/magenta.png
 
 # MAPS AND DATA CONFIGURATION
 
-# The appid for the configured application
-appId: ""
 # The web map id
 webmap: 9ec6c45f6ad249a8993527614a850077
 # Choose name field
@@ -104,4 +104,4 @@ proxyUrl: ""
 # Specify the url to a geometry service
 geometryServiceUrl: "http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer"
 # Modify this to point to your sharing service URL if you are using the portal
-sharingUrl: http://www.arcgis.com/sharing/rest/content/items
+sharingUrl: "http://www.arcgis.com/sharing/rest/content/items"

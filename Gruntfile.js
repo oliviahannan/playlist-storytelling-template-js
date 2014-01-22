@@ -13,9 +13,9 @@ module.exports = function(grunt) {
 
 		clean: {
 
-			build: ['build/app/javascript/*'],
-			jsLib: ['build/lib'],
-			buildTools: ['build/resources/buildTools']
+			build: ['deploy/app/javascript/*'],
+			jsLib: ['deploy/lib'],
+			buildTools: ['deploy/resources/buildTools']
 
 		},
 
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 			},
 			libIE: {
 				src: ['source/lib/oldIE/**/*.js'],
-				dest: 'build/app/javascript/oldIE.min.js'
+				dest: 'deploy/app/javascript/oldIE.min.js'
 			}
 		},
 
@@ -40,10 +40,10 @@ module.exports = function(grunt) {
 						flatten: true,
 						cwd: '',
 						src: ['source/lib/**/*.map'],
-						dest: 'build/app/javascript/'
+						dest: 'deploy/app/javascript/'
 					}
 				]
-			},
+			}
 		},
 
 		requirejs: {
@@ -59,8 +59,35 @@ module.exports = function(grunt) {
 						'lib': 'lib'
 					},
 					name: 'resources/buildTools/config/ConfigViewer',
-					out: 'build/app/javascript/<%= advSettings.appIdentifier %>-viewer.min.js'
+					out: 'deploy/app/javascript/<%= advSettings.appIdentifier %>-viewer.min.js'
 				}
+			}
+		},
+
+		compress: {
+			user: {
+				options: {
+					archive: '<%= advSettings.appIdentifier %>.zip'
+				},
+				files: [
+					{
+						expand: true,
+						src: ['deploy/**','samples/**','Readme.pdf','license.txt'],
+						dest: ''
+					}
+				]
+			},
+			dev: {
+				options: {
+					archive: '<%= advSettings.appIdentifier %>_DevloperDownload.zip'
+				},
+				files: [
+					{
+						expand: true,
+						src: ['source/**','data/**','samples/**','Readme.pdf','license.txt','.gitignore','config.rb','Gemfile','Gruntfile.js','package.json'],
+						dest: ''
+					}
+				]
 			}
 		}
 
@@ -73,6 +100,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-compress');
 
 	// Default task(s).
 	grunt.registerTask('default', [
@@ -92,7 +120,10 @@ module.exports = function(grunt) {
 		'requirejs',
 		'copy',
 		'clean:jsLib',
-		'clean:buildTools'
+		'clean:buildTools',
+
+		// Zip downloads
+		'compress'
 
 	]);
 
