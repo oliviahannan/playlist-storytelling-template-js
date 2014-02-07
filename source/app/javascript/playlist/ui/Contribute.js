@@ -13,8 +13,13 @@ define(["esri/tasks/locator",
 
 	return function Contribute(layer)
 	{
+
+		// CREATE NEW ADDRESS LOCATOR
+
 		var _locator = new Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
 		_locator.on("address-to-locations-complete", uploadPoint);
+
+		// APPEND CONTRIBUTION FORM TO HTML BODY
 
 		$("body").append('<div id="contribute-modal" class="modal" style="height:auto; overflow: visible; margin-top:-300px;">\
 			<a id="close-login" class="icon-close right" onclick="$(\'#contribute-modal\').removeClass(\'visible\');"></a>\
@@ -22,11 +27,11 @@ define(["esri/tasks/locator",
 				<h4 style="font-weight:bold; size: 16px;">Add Location</h4>\
 				<label style="margin-top: 15px;">\
 					Name\
-					<input style="margin-top: 10px;" id="vacation-name" class="form-item" type="text">\
+					<input style="margin-top: 10px; line-height: 1.8;" id="vacation-name" class="form-item" type="text">\
 				</label>\
 				<label style="margin-top: 15px;">\
 					Type\
-					<select style="margin-top: 10px;" id="vacation-type">\
+					<select style="margin-top: 10px; line-height: 1.8;" id="vacation-type">\
 						<option value="Beach">Beach</option>\
 						<option value="City">City</option>\
 						<option value="Mountains">Mountains</option>\
@@ -35,15 +40,15 @@ define(["esri/tasks/locator",
 				</label>\
 				<label style="margin-top: 15px;">\
 					Description\
-					<textarea style="margin-top: 10px;" id="vacation-description" class="form-item"></textarea>\
+					<textarea style="margin-top: 10px; line-height: 1.8;" id="vacation-description" class="form-item"></textarea>\
 				</label>\
 				<label style="margin-top: 15px;">\
 					Photo URL\
-					<input style="margin-top: 10px; margin-bottom: 15px;" id="vacation-photo" class="form-item" type="text">\
+					<input style="margin-top: 10px; margin-bottom: 15px; line-height: 1.8;" id="vacation-photo" class="form-item" type="text">\
 				</label>\
 				<label style="margin-top: 15px;">\
 					Address\
-					<input style="margin-top: 10px; margin-bottom: 15px;" id="vacation-address" class="form-item" type="text">\
+					<input style="margin-top: 10px; margin-bottom: 15px; line-height: 1.8;" id="vacation-address" class="form-item" type="text">\
 				</label>\
 				<div class="alert error icon-alert" style="display:none;">\
 					Make sure to fill in all fields.\
@@ -53,11 +58,15 @@ define(["esri/tasks/locator",
 			</div>\
 		</div>');
 
+		// ADD EVENT TO OPEN CONTRIBUTION FORM WHEN BUTTON IS CLICKED
+
 		$("#contribute").click(function(){
 			$(".form-item").val("");
 			$("#contribute-modal").addClass('visible');
 			$("#contribute-modal .alert").hide();
 		});
+
+		// VERIFY THAT ALL FIELDS IN FORM ARE FILLED IN
 
 		$("#add-location").click(function(){
 			var error = false;
@@ -74,6 +83,8 @@ define(["esri/tasks/locator",
 			}
 		});
 
+		// RUN GEOCODER TO FIND THE LATITUDE AND LONGITUDE OF OUR ADRESS
+
 		function queryAddress(loc) {
 			var address = {
 				"SingleLine": loc
@@ -85,6 +96,8 @@ define(["esri/tasks/locator",
 
 			_locator.addressToLocations(options);
 		}
+
+		// EDIT FEATURE SERVICE TO ADD NEW LOCATION
 
 		function uploadPoint(results) {
 			var point;

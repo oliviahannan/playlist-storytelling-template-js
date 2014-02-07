@@ -2,7 +2,7 @@ define(["dojo/has",
 	"esri/tasks/GeometryService",
 	"storymaps/utils/Helper",
 	"storymaps/playlist/core/mobile/Layout",
-	"storymaps/playlist/ui/Contribute",
+	// "storymaps/playlist/ui/Contribute",
 	"storymaps/playlist/ui/Map",
 	"storymaps/playlist/ui/List",
 	"lib/jquery/jquery-1.10.2.min"],
@@ -10,7 +10,7 @@ define(["dojo/has",
 		GeometryService,
 		Helper,
 		MobileLayout,
-		Contribute,
+		// Contribute,
 		Map,
 		List){
 
@@ -84,7 +84,7 @@ define(["dojo/has",
 		{
 			if (!_readyState.map){
 				updateText(item.title,item.snippet,item.description);
-				new Contribute(layer);
+				// new Contribute(layer);
 				_readyState.map = true;
 				if (_layersReady === _map.getLayerCount()){
 					_readyState.list = true;
