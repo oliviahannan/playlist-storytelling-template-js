@@ -35,25 +35,25 @@ metaShortcutURL: //resources.esri.com/favicon.ico
 # BANNER CONFIGURATION
 
 # App title, leave black to use webmap title
-title: ""
+title: "Favorite Vacation Locations"
 # App subtitle, leave black to use webmap subtitle
-subtitle: ""
+subtitle: "Explore a map of the favorite vacation locations as submitted by you!"
 # App description, leave black to use webmap description
-description: ""
+description: "This map features a list of favorite vacation locations submitted by other viewers. Explore the top picks from others or submit your own below.<br><br>Vacation locations are divided into four categories - beach, city, mountains, and other. Use the search or filter to see if someone else shares your favorite vacation spot.<br><br><button id='contribute' class='btn primary'>Add your favorite</button>"
 
 
 # LEGEND AND DESCRIPTION
 
-playlistLegendVisible: false
+playlistLegendVisible: true
 
 # Playlist layer title
-playlistTitle: Playlist Layer
+playlistTitle: Vacation Type
 
 # Legend names for playlist markers
-playlistRedIcon: Red
-playlistBlueIcon: Blue
-playlistGreenIcon: Green
-playlistPurpleIcon: Purple
+playlistRedIcon: City
+playlistBlueIcon: Beach
+playlistGreenIcon: Mountains
+playlistPurpleIcon: Other
 
 # Legend visibility for playlist markers
 playlistRedIconVisible: true
@@ -70,17 +70,17 @@ playlistPurpleIconURL: resources/images/markers/indexed/purple/IconPurple1.png
 # MAPS AND DATA CONFIGURATION
 
 # The web map id
-webmap: 225d8fdebb1440db80165645dcd16b91
+webmap: 2570e98ff237400d8bbba10dd93f90e1
 # Choose name field
 nameField: ""
 # Choose image field
 imageField: ""
 # Choose color field
-colorField: ""
+colorField: "category"
 # Choose order field
-orderField: ""
+orderField: "name"
 # Choose filter field
-filterField: ""
+filterField: "category"
 # If the webmap uses Bing Maps data, you will need to provided your Bing Maps Key
 bingMapsKey: ""
 # Specify a proxy for custom deployment

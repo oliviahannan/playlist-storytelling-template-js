@@ -1,4 +1,5 @@
-define(["storymaps/playlist/config/MapConfig","esri/map",
+define(["storymaps/playlist/config/MapConfig",
+	"esri/map",
 	"esri/arcgis/utils",
 	"esri/dijit/Legend",
 	"esri/dijit/Popup",
@@ -58,7 +59,8 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 		_titleFields = {},
 		_lastHightlighedGraphic,
 		_tempLayerId,
-		_tempObjectId;
+		_tempObjectId,
+		_contribLayer;
 
 		this.init = function(){
 
@@ -117,7 +119,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				on.once(_map,"update-end",function(){
 					if(onLoad && !_mapReady){
 						_mapReady = true;
-						onLoad(response.itemInfo.item);
+						onLoad(response.itemInfo.item,_contribLayer);
 					}
 				});
 
@@ -353,6 +355,9 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					playlistLyr.mode = 0;
 					addLayerEvents(playlistLyr);
 					on.once(playlistLyr, "update-end", function(){
+						if(!_contribLayer){
+							_contribLayer = playlistLyr;
+						}
 						var query = new Query();
 						query.where = "1=1";
 						query.outFields = ["*"];

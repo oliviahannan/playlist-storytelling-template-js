@@ -14,7 +14,7 @@ define(["dojo/_base/array",
 	return function MapConfig()
 	{
 
-		var useDefaultRenderer = true;
+		var useDefaultRenderer = false;
 
 		var maxAllowablePoints = 99;
 
@@ -72,7 +72,24 @@ define(["dojo/_base/array",
 				return renderer;
 			}
 			else{
-				// Add custom renderer
+				_tempRendererField = layer.objectIdField;
+				
+				var defaultSymbol1 = new PictureMarkerSymbol("resources/images/markers/simple/yellow.png", markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset);
+				var renderer1 = new UniqueValueRenderer(defaultSymbol1, _tempRendererField);
+
+				array.forEach(features,function(grp,i){
+					if (i < maxAllowablePoints){
+
+						if (!isNaN(grp.attributes[orderAttr]) && isFinite(grp.attributes[orderAttr]) && grp.attributes[orderAttr] % 1 === 0){
+							i = grp.attributes[orderAttr] - 1;
+						}
+						
+						var symbol = getSymbolForCustomRenderer(grp,colorAttr,i);
+						renderer1.addValue(grp.attributes[_tempRendererField], symbol);
+					}
+				});
+
+				return renderer1;
 			}
 		};
 
@@ -88,6 +105,33 @@ define(["dojo/_base/array",
 					iconURL = "resources/images/markers/indexed/green/NumberIcong" + (index + 1) + ".png";
 				}
 				else if (graphic.attributes[colorAttr].toLowerCase() === "p" || graphic.attributes[colorAttr].toLowerCase() === "purple"){
+					iconURL = "resources/images/markers/indexed/purple/IconPurple" + (index + 1) + ".png";
+				}
+				else{
+					iconURL = "resources/images/markers/indexed/red/NumberIcon" + (index + 1) + ".png";
+				}
+			}
+			else{
+				iconURL = "resources/images/markers/indexed/red/NumberIcon" + (index + 1) + ".png";
+			}
+
+			var symbol = new PictureMarkerSymbol(iconURL, markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset);
+
+			return symbol;
+		}
+
+		function getSymbolForCustomRenderer(graphic,colorAttr,index)
+		{
+			var iconURL;
+
+			if(graphic.attributes[colorAttr]){
+				if (graphic.attributes[colorAttr].toLowerCase() === "b" || graphic.attributes[colorAttr].toLowerCase() === "beach"){
+					iconURL = "resources/images/markers/indexed/blue/NumberIconb" + (index + 1) + ".png";
+				}
+				else if (graphic.attributes[colorAttr].toLowerCase() === "g" || graphic.attributes[colorAttr].toLowerCase() === "mountains"){
+					iconURL = "resources/images/markers/indexed/green/NumberIcong" + (index + 1) + ".png";
+				}
+				else if (graphic.attributes[colorAttr].toLowerCase() === "p" || graphic.attributes[colorAttr].toLowerCase() === "other"){
 					iconURL = "resources/images/markers/indexed/purple/IconPurple" + (index + 1) + ".png";
 				}
 				else{
