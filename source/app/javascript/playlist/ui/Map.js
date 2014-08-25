@@ -354,7 +354,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 					addLayerEvents(playlistLyr);
 					on.once(playlistLyr, "update-end", function(){
 						var query = new Query();
-						query.where = "1=1";
+						query.where = "Creator='StoryMaps'";
 						query.outFields = ["*"];
 						query.returnGeometry = true;
 						playlistLyr.queryFeatures(query).then(function(results){
