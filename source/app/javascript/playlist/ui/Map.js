@@ -347,7 +347,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 						}
 					});
 				}
-				else if(layer.url && layer.resourceInfo.type === "Feature Layer" && layer.resourceInfo.geometryType === "esriGeometryPoint" && layer.visibility && checkExcluded(layer.layerObject.name)){
+				else if(layer.url && layer.resourceInfo.type === "Feature Layer" && (layer.resourceInfo.geometryType === "esriGeometryPoint" || layer.resourceInfo.geometryType === "esriGeometryMultipoint") && layer.visibility && checkExcluded(layer.layerObject.name)){
 					var playlistLyr = layer.layerObject;
 					playlistLayers.push(playlistLyr);
 					playlistLyr.mode = 0;
