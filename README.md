@@ -159,7 +159,8 @@ In order to modify pages locally on your machine you will have to set up GitHub 
 
 1. Open git shell/bash at project folder
 2. Run `bundle install`
-3. Run `npm install`
+3. Run `npm install -g grunt-cli`
+4. Run `npm install`
 
 ### Preview and test development version
 
