@@ -1,0 +1,8 @@
+{
+  "layers": [{
+      "name": "production",
+      "properties": {
+        "keepWebmapStyle": true
+      }
+    }]
+}

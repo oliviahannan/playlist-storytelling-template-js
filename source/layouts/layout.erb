@@ -59,14 +59,14 @@
 
 </head>
 <body class="<%= data.advancedSettings.includeDijitCSS && data.advancedSettings.dijitsTheme ? data.advancedSettings.dijitsTheme : "" %>">
-	
+
 	<div id="app-load-screen">
 		<div id="loader"></div>
 		<h4 id="loading-message">Loading <%= data.advancedSettings.appName %></h4>
 	</div>
 
 	<div id="bitly-overlay" class="modal bitly-modal">
-		<a class="icon-close right" onclick="$('.bitly-modal').removeClass('visible');"></a>		
+		<a class="icon-close right" onclick="$('.bitly-modal').removeClass('visible');"></a>
 		<h4>Bitly link to share</h4>
 		<br>
 		<a id="bitly-link" target="_blank"></a>
@@ -77,12 +77,12 @@
 
 	<% if data.advancedSettings.builder %>
 	<%= partial "layouts/builderMenu" %>
-	<% end %>	
+	<% end %>
 
 	<div id="app-content" class="region-center">
 		<%= yield %>
 	</div>
-	
+
 	<% if data.config.includeAnalytics && data.config.trackingId %>
 	<!--Google Analytics Start-->
 		<script type="text/javascript">
@@ -183,6 +183,8 @@
 			},
 			// Add the layer names of valid point layers that should be excluded from the playlist and used as reference layers
 			excludedLayers: [],
+      // Add optional layer specific properties
+      layerProperties: <%= data.layerProperties.to_json %>,
 			// If the webmap uses Bing Maps data, you will need to provided your Bing Maps Key
 			bingMapsKey: "<%= data.config.bingMapsKey %>",
 			// Specify a proxy for custom deployment

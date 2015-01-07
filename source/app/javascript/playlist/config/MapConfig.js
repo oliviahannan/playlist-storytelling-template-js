@@ -1,13 +1,13 @@
 define(["dojo/_base/array",
 	"esri/symbols/PictureMarkerSymbol",
-	"esri/renderers/UniqueValueRenderer"], 
+	"esri/renderers/UniqueValueRenderer"],
 	function(array,
 		PictureMarkerSymbol,
 		UniqueValueRenderer){
 	/**
 	* Playlist List
 	* @class Playlist List
-	* 
+	*
 	* Class to define a new item list in the playlist app
 	*/
 
@@ -53,7 +53,7 @@ define(["dojo/_base/array",
 			if (useDefaultRenderer){
 
 				_tempRendererField = layer.objectIdField;
-				
+
 				var defaultSymbol = new PictureMarkerSymbol("resources/images/markers/indexed/red/NumberIcon1.png", markerPostionDefault.width, markerPostionDefault.height).setOffset(markerPostionDefault.xOffset,markerPostionDefault.yOffset);
 				var renderer = new UniqueValueRenderer(defaultSymbol, _tempRendererField);
 
@@ -63,7 +63,7 @@ define(["dojo/_base/array",
 						if (!isNaN(grp.attributes[orderAttr]) && isFinite(grp.attributes[orderAttr]) && grp.attributes[orderAttr] % 1 === 0){
 							i = grp.attributes[orderAttr] - 1;
 						}
-						
+
 						var symbol = getSymbolForDefaultRenderer(grp,colorAttr,i);
 						renderer.addValue(grp.attributes[_tempRendererField], symbol);
 					}

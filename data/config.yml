@@ -70,7 +70,7 @@ playlistPurpleIconURL: resources/images/markers/indexed/purple/IconPurple1.png
 # MAPS AND DATA CONFIGURATION
 
 # The web map id
-webmap: 225d8fdebb1440db80165645dcd16b91
+webmap: 339cb49a015b455985c3672d8502024f
 # Choose name field
 nameField: ""
 # Choose image field
