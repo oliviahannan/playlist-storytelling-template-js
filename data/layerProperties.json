@@ -2,12 +2,15 @@
   "layers": [{
       "name": "production",
       "properties": {
-        "keepWebmapStyle": true
+        "keepWebmapStyle": true,
+        "tabTitle": "Cheese Production"
       }
     },{
       "name": "country",
       "properties": {
-        "keepWebmapStyle": true
+        "keepWebmapStyle": true,
+        "tabTitle": "Cheeses of the World",
+        "tabOrder": 1
       }
     }]
 }

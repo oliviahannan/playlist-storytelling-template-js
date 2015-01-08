@@ -125,6 +125,8 @@
 		var configOptions = {
 			// The web map id
 			webmap: "<%= data.config.webmap %>",
+      // If multiple playlist layers are found they will be shown as tabs. Setting this to false will cause all layers to remain in the same list but reset ordering to 1.
+      showMultipleLayersAsTabs: <%= data.config.showMultipleLayersAsTabs %>,
 			// Enter a title, if no title is specified, the webmap's title is used.
 			title: "<%= data.config.title %>",
 			// Enter a subtitle, if not specified the ArcGIS.com web map's summary is used

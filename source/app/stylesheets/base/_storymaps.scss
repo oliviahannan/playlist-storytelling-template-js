@@ -80,9 +80,14 @@ html, body{
 	background: {
 		color: $darker-gray;
 	}
-	height: 115px;
+  height: 115px;
 	z-index: 100;
-	overflow: hidden;
+}
+
+#header-main{
+  height: 115px;
+  width: 100%;
+  overflow: hidden;
 }
 
 #branding-wrapper{

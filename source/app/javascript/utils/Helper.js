@@ -1,12 +1,12 @@
 define(["dojo/_base/array",
 	"lib/spin.min.js",
 	"lib/jquery/jquery-1.10.2.min",
-	"storymaps/utils/SocialSharing"], 
+	"storymaps/utils/SocialSharing"],
 	function(array){
 	/**
 	* Helper
 	* @class Helper
-	* 
+	*
 	* Collection of helper functions
 	*
 	* Dependencies: Jquery 1.10.2
@@ -46,6 +46,8 @@ define(["dojo/_base/array",
 
 	function regionLayout()
 	{
+    $("#side-pane-buffer").height($("#banner").height());
+
 		$(".region-center").each(function(){
 			var l = $(this).siblings(".region-left:visible").outerWidth(),
 				r = $(this).siblings(".region-right:visible").outerWidth(),

@@ -71,6 +71,8 @@ playlistPurpleIconURL: resources/images/markers/indexed/purple/IconPurple1.png
 
 # The web map id
 webmap: 339cb49a015b455985c3672d8502024f
+# If multiple playlist layers are found they will be shown as tabs. Setting this to false will cause all layers to remain in the same list but reset ordering to 1.
+showMultipleLayersAsTabs: true
 # Choose name field
 nameField: ""
 # Choose image field

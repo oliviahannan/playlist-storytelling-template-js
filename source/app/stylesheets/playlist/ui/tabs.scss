@@ -1,0 +1,27 @@
+#tab-area{
+  height: 500px;
+  overflow: hidden;
+
+  .tab{
+    padding: 10px 10px;
+    margin-left: 5px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    display: inline-block;
+    color: #fff;
+    background-color: #5F788B;
+    cursor: pointer;
+
+    &:first-child{
+      margin-left: 25px;
+    }
+
+    &:hover{
+      background-color: #49879E;
+    }
+
+    &.active{
+      background-color: #58ACCB;
+    }
+  }
+}

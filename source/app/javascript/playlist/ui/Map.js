@@ -1,4 +1,6 @@
-define(["storymaps/playlist/config/MapConfig","esri/map",
+define(["storymaps/playlist/config/MapConfig",
+  "storymaps/utils/Helper",
+  "esri/map",
 	"esri/arcgis/utils",
 	"esri/dijit/Legend",
 	"esri/dijit/Popup",
@@ -19,6 +21,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 	"esri/dijit/HistogramTimeSlider",
 	"dojo/_base/sniff"],
 	function(MapConfig,
+    Helper,
 		Map,
 		arcgisUtils,
 		Legend,
@@ -45,7 +48,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 	* Class to define a new map for the playlist template
 	*/
 
-	return function PlaylistMap(isMobile,geometryServiceURL,bingMapsKey,webmapId,excludedLayers,dataFields,displayLegend,playlistLegendConfig,layerProperties,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection)
+	return function PlaylistMap(isMobile,showTabs,geometryServiceURL,bingMapsKey,webmapId,excludedLayers,dataFields,displayLegend,playlistLegendConfig,layerProperties,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection)
 	{
 		var _mapConfig = new MapConfig(),
 		_map,
@@ -400,6 +403,9 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				}
 			});
 			buildLegend(layerIds);
+      if (showTabs && playlistLayers.length > 1){
+        createTabs(playlistLayers);
+      }
 			initTime(playlistLayers);
 		}
 
@@ -424,12 +430,30 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
     function getPropertiesForLayer(name){
       var properties = false;
       array.forEach(layerProperties.layers,function(lyr){
-        console.log(name);
         if (name.toLowerCase().search(lyr.name.toLowerCase()) >= 0){
           properties = lyr.properties;
         }
       });
       return properties;
+    }
+
+    function createTabs(layers){
+      $.each(layers,function(){
+        var text = this.playlistProperties.tabTitle ? this.playlistProperties.tabTitle : this.name;
+        var tab = $('<div class="tab" data-tab-order="' + (this.playlistProperties.tabOrder ? this.playlistProperties.tabOrder : 100) + '"">' + text + '</div>');
+        $('#tab-area').append(tab);
+      });
+
+      $('#tab-area').find('.tab').sort(function (a, b) {
+         return $(a).attr('data-tab-order') - $(b).attr('data-tab-order');
+      }).appendTo('#tab-area');
+
+      $('#tab-area .tab').first().addClass('active');
+
+
+      $('#banner').height(150);
+      Helper.resetRegionLayout();
+
     }
 
 		function setRenderer(lyr)
