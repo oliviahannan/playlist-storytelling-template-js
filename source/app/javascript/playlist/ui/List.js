@@ -2,13 +2,13 @@ define(["dojo/_base/array",
 	"dojo/has",
 	"lib/jquery/jquery-1.10.2.min",
 	"lib/jquery.autoellipsis-1.0.10.min",
-	"lib/jquery-ui-1.10.3.custom.min"], 
+	"lib/jquery-ui-1.10.3.custom.min"],
 	function(array,
 		has){
 	/**
 	* Playlist List
 	* @class Playlist List
-	* 
+	*
 	* Class to define a new item list in the playlist app
 	*
 	* Dependencies: Jquery 1.10.2
@@ -18,7 +18,8 @@ define(["dojo/_base/array",
 	{
 		var _listEl = $(selector),
 		_filterSet = [],
-		_searchResults;
+		_searchResults
+    _maxOrder = 0;
 
 		addSearchEvents();
 
@@ -27,6 +28,10 @@ define(["dojo/_base/array",
 			_listEl.empty();
 			$(".playlist-item").unbind("click");
 			buildList(lyrItems);
+
+      $('.playlist-item td.marker-cell.no-marker').css({
+        'width': (_maxOrder.toString().length*11)
+      });
 
 			onLoad();
 		};
@@ -85,12 +90,12 @@ define(["dojo/_base/array",
 							$(this).removeClass("hidden-search");
 						});
 						$("#search-submit").addClass("icon-close").removeClass("icon-search");
-						setItemResults();						
+						setItemResults();
 					},
 					close: function(){
 						if ($(searchSelector).val() === ""){
 							$(".playlist-item").removeClass("hidden-search");
-							$("#search-submit").addClass("icon-search").removeClass("icon-close");	
+							$("#search-submit").addClass("icon-search").removeClass("icon-close");
 							setItemResults();
 						}
 					},
@@ -103,7 +108,7 @@ define(["dojo/_base/array",
 					}
 				});
 
-				$(searchSelector).blur(function(){					
+				$(searchSelector).blur(function(){
 					if ($(searchSelector).val() === ""){
 						$(".playlist-item").removeClass("hidden-search");
 						$("#search-submit").addClass("icon-search").removeClass("icon-close");
@@ -116,7 +121,7 @@ define(["dojo/_base/array",
 						$(searchSelector).val("");
 						$(".playlist-item").removeClass("hidden-search");
 						$(this).addClass("icon-search").removeClass("icon-close");
-						setItemResults();	
+						setItemResults();
 					}
 				});
 			}
@@ -134,51 +139,36 @@ define(["dojo/_base/array",
 				onGetTitleField(titleAttr);
 				array.forEach(items,function(item){
 					var objId = item.graphic.attributes[item.objectIdField];
-					var itemStr = "";
-					if (attr.thumbnail){
-						itemStr = '\
-							<div class="playlist-item" layer-id="' + layerId + '" object-id="' + objId + '" data-filter="' + item.filter + '">\
-								<table>\
-									<tbody>\
-										<tr>\
-											<td class="marker-cell">\
-												<img src=' + item.iconURL + ' alt="" class="marker" />\
-											</td>\
-											<td class="thumbnail-cell">\
-												<div class="thumbnail-container" style="background-image: url(' + item.graphic.attributes[attr.thumbnail] + '); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + item.graphic.attributes[attr.thumbnail] + '", sizingMethod="scale");"></div>\
-											</td>\
-											<td class="title-cell">\
-												<h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6>\
-											</td>\
-										</tr>\
-									</tbody>\
-								</table>\
-							</div>\
-						';
-					}
-					else{
-						itemStr = '\
-							<div class="playlist-item no-image" layer-id="' + layerId + '" object-id="' + objId + '" data-filter="' + item.filter + '">\
-								<table>\
-									<tbody>\
-										<tr>\
-											<td class="marker-cell">\
-												<img src=' + item.iconURL + ' alt="" class="marker" />\
-											</td>\
-											<td class="title-cell">\
-												<h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6>\
-											</td>\
-										</tr>\
-									</tbody>\
-								</table>\
-							</div>\
-						';
-					}
-					if ($.inArray(item.filter,_filterSet) < 0){
+					var itemStr = '<div class="playlist-item';
+          if (attr.thumbnail){
+            itemStr+='"';
+          }
+          else{
+            itemStr+=' no-image"';
+          }
+          itemStr+=' layer-id="' + layerId + '" object-id="' + objId + '" data-filter="' + item.filter + '"><table><tbody><tr><td class="marker-cell';
+          if (item.iconURL){
+            itemStr+='"><img src=' + item.iconURL + ' alt="" class="marker" />'
+          }
+          else{
+            itemStr+=' no-marker"><span>' + item.order + '</span>';
+          }
+          itemStr+='</td>';
+          if (attr.thumbnail){
+            itemStr+='<td class="thumbnail-cell"><div class="thumbnail-container" style="background-image: url(' + item.graphic.attributes[attr.thumbnail] + '); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + item.graphic.attributes[attr.thumbnail] + '", sizingMethod="scale");"></div></td>';
+          }
+          itemStr+='<td class="title-cell"><h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6></td></tr></tbody></table></div>';
+
+          if ($.inArray(item.filter,_filterSet) < 0){
 						addNewFilter(item.filter);
 					}
-					_listEl.append(itemStr);
-				});			
+
+          _listEl.append(itemStr);
+
+          if (item.order > _maxOrder){
+            _maxOrder = item.order;
+          }
+				});
 			}
 			$(".item-title").ellipsis();
 
@@ -232,7 +222,7 @@ define(["dojo/_base/array",
 						layerId: $(this).attr("layer-id"),
 						objectId: $(this).attr("object-id")
 					};
-					
+
 					onHighlight(item);
 				});
 

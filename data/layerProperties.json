@@ -4,5 +4,10 @@
       "properties": {
         "keepWebmapStyle": true
       }
+    },{
+      "name": "country",
+      "properties": {
+        "keepWebmapStyle": true
+      }
     }]
 }

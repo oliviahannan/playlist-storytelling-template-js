@@ -424,6 +424,7 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
     function getPropertiesForLayer(name){
       var properties = false;
       array.forEach(layerProperties.layers,function(lyr){
+        console.log(name);
         if (name.toLowerCase().search(lyr.name.toLowerCase()) >= 0){
           properties = lyr.properties;
         }
@@ -486,12 +487,18 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 				if (i < maxPoints){
 
 					var symbol = renderer.getSymbol(grp);
+          var order = i;
+
+          if (!isNaN(grp.attributes[orderAttr]) && isFinite(grp.attributes[orderAttr]) && grp.attributes[orderAttr] % 1 === 0){
+            order = grp.attributes[orderAttr] - 1;
+          }
 
 					var item = {
 						layerId: layerObj.id,
 						objectIdField: layerObj.objectIdField,
 						graphic: grp,
-						iconURL: symbol.url,
+            order: ++order,
+						iconURL: layerObj.playlistProperties.keepWebmapStyle ? false : symbol.url,
 						filter: grp.attributes[dataFields.filterField]
 					};
 					lyrItems.push(item);
@@ -514,8 +521,6 @@ define(["storymaps/playlist/config/MapConfig","esri/map",
 		{
 			var layers = arcgisUtils.getLegendLayers(_mapResponse);
 			var legendLyrs = [];
-
-      console.log(_playlistItems);
 
 			array.forEach(layers,function(lyr){
 				if (array.indexOf(layerIds,lyr.layer.id) < 0){

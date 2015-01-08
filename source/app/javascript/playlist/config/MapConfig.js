@@ -62,6 +62,7 @@ define(["dojo/_base/array",
 
 						if (!isNaN(grp.attributes[orderAttr]) && isFinite(grp.attributes[orderAttr]) && grp.attributes[orderAttr] % 1 === 0){
 							i = grp.attributes[orderAttr] - 1;
+              console.log(i);
 						}
 
 						var symbol = getSymbolForDefaultRenderer(grp,colorAttr,i);

@@ -22,6 +22,7 @@
 
 .playlist-item table{
 	table-layout: fixed;
+  height: 100%;
 }
 
 .playlist-item td{
@@ -31,6 +32,12 @@
 		padding-left: 15px;
 		width: 22px;
 		vertical-align: top;
+
+    &.no-marker{
+      color: $gray;
+      font-size: 16px;
+      font-weight: bold;
+    }
 	}
 
 	&.thumbnail-cell{
