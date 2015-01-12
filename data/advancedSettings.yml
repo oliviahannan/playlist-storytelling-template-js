@@ -13,7 +13,7 @@ builder: false
 # ArcGIS Javascript API Version
 apiVersion: '3.12'
 # Include Dijits CSS
-includeDijitCSS: false
+includeDijitCSS: true
 # Dojo Dijits CSS Theme (Choose: Claro, Tundra, Nihilo, Soria)
 dijitsTheme: tundra
 # Use Development version of ArcGIS JavaScript API

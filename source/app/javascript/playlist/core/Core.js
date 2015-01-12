@@ -63,7 +63,7 @@ define(["dojo/has",
 				configOptions.webmap = urlObject.query.webmap;
 			}
 
-			_map = new Map(_mobile,configOptions.showMultipleLayersAsTabs,configOptions.geometryServiceUrl,configOptions.bingMapsKey,configOptions.webmap,configOptions.excludedLayers,configOptions.dataFields,configOptions.playlistLegend.visible,configOptions.playlistLegend,configOptions.layerProperties,"map","playlist-legend","legend","#side-pane",onMapLoad,onMapLegendHide,onLayersUpdate,onMarkerOver,onMarkerOut,onMarkerSelect,onMarkerRemoveSelection),
+			_map = new Map(_mobile,configOptions.showMultipleLayersAsTabs,configOptions.geometryServiceUrl,configOptions.bingMapsKey,configOptions.webmap,configOptions.excludedLayers,configOptions.dataFields,configOptions.playlistLegend.visible,configOptions.playlistLegend,configOptions.layerProperties,"map","playlist-legend","legend","#side-pane",onMapLoad,onMapLegendHide,onLayersUpdate,onMarkerOver,onMarkerOut,onMarkerSelect,onMarkerRemoveSelection,onSelectTab),
 			_list = new List("#playlist","#search","#filter-content",configOptions.dataFields,onListLoad,onListGetTitleAttr,onListSelect,onListHighlight,onListRemoveHighlight,onListSearch);
 
 			loadMap();
@@ -130,6 +130,12 @@ define(["dojo/has",
 				_list.removeSelection();
 			}
 		}
+
+    function onSelectTab(layerId){
+      if(_list){
+        _list.displaySingleLayerItems(layerId);
+      }
+    }
 
 
 		// LIST FUNCTIONS
@@ -228,6 +234,10 @@ define(["dojo/has",
 		function appReady(ready)
 		{
 			if (ready){
+
+        // Select first tab if available
+        $('#tab-area .tab').first().trigger('click');
+
 				Helper.resetRegionLayout();
 				Helper.removeLoadScreen();
 

@@ -68,6 +68,12 @@ define(["dojo/_base/array",
 			$(".playlist-item").removeClass("selected");
 		};
 
+    this.displaySingleLayerItems = function(layerId){
+      $(".playlist-item").addClass("hidden-layer");
+      $(".playlist-item[layer-id='" + layerId + "']").removeClass("hidden-layer");
+      setItemResults();
+    };
+
 		function addSearchEvents()
 		{
 			if (searchSelector){
@@ -157,7 +163,7 @@ define(["dojo/_base/array",
           if (attr.thumbnail){
             itemStr+='<td class="thumbnail-cell"><div class="thumbnail-container" style="background-image: url(' + item.graphic.attributes[attr.thumbnail] + '); filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="' + item.graphic.attributes[attr.thumbnail] + '", sizingMethod="scale");"></div></td>';
           }
-          itemStr+='<td class="title-cell"><h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6></td></tr></tbody></table></div>';
+          itemStr+='<td class="title-cell"><h6 class="item-title">' + item.graphic.attributes[attr.title] + '</h6></td></tr></tbody></table><div class="playlist-item-background"></div></div>';
 
           if ($.inArray(item.filter,_filterSet) < 0){
 						addNewFilter(item.filter);

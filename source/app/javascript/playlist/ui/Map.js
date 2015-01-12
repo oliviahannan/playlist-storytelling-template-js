@@ -48,7 +48,7 @@ define(["storymaps/playlist/config/MapConfig",
 	* Class to define a new map for the playlist template
 	*/
 
-	return function PlaylistMap(isMobile,showTabs,geometryServiceURL,bingMapsKey,webmapId,excludedLayers,dataFields,displayLegend,playlistLegendConfig,layerProperties,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection)
+	return function PlaylistMap(isMobile,showTabs,geometryServiceURL,bingMapsKey,webmapId,excludedLayers,dataFields,displayLegend,playlistLegendConfig,layerProperties,mapSelector,playlistLegendSelector,legendSelector,sidePaneSelector,onLoad,onHideLegend,onListItemRefresh,onHighlight,onRemoveHighlight,onSelect,onRemoveSelection,onSelectTab)
 	{
 		var _mapConfig = new MapConfig(),
 		_map,
@@ -438,18 +438,33 @@ define(["storymaps/playlist/config/MapConfig",
     }
 
     function createTabs(layers){
-      $.each(layers,function(){
-        var text = this.playlistProperties.tabTitle ? this.playlistProperties.tabTitle : this.name;
-        var tab = $('<div class="tab" data-tab-order="' + (this.playlistProperties.tabOrder ? this.playlistProperties.tabOrder : 100) + '"">' + text + '</div>');
+      console.log(layers);
+      $.each(layers,function(i){
+        var layer = this;
+        var text = layer.playlistProperties.tabTitle ? layer.playlistProperties.tabTitle : layer.name;
+        var tab = $('<div class="tab" data-tab-order="' + (layer.playlistProperties.tabOrder ? layer.playlistProperties.tabOrder : 100) + '"">' + text + '</div>');
         $('#tab-area').append(tab);
+
+        tab.click(function(){
+          selectLayer($(this),layer);
+        });
       });
 
       $('#tab-area').find('.tab').sort(function (a, b) {
          return $(a).attr('data-tab-order') - $(b).attr('data-tab-order');
       }).appendTo('#tab-area');
 
-      $('#tab-area .tab').first().addClass('active');
+      function selectLayer(tab,layer){
+        $('#tab-area .tab').removeClass('active');
+        tab.addClass('active');
 
+        $.each(layers,function(){
+          this.hide();
+          layer.show();
+        });
+
+        onSelectTab(layer.id);
+      }
 
       $('#banner').height(150);
       Helper.resetRegionLayout();

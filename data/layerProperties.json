@@ -3,14 +3,22 @@
       "name": "production",
       "properties": {
         "keepWebmapStyle": true,
-        "tabTitle": "Cheese Production"
+        "tabTitle": "Cheese Production",
+        "tabOrder": 1
+      }
+    },{
+      "name": "consumption",
+      "properties": {
+        "keepWebmapStyle": true,
+        "tabTitle": "Cheese Consumption",
+        "tabOrder": 2
       }
     },{
       "name": "country",
       "properties": {
         "keepWebmapStyle": true,
         "tabTitle": "Cheeses of the World",
-        "tabOrder": 1
+        "tabOrder": 3
       }
     }]
 }
