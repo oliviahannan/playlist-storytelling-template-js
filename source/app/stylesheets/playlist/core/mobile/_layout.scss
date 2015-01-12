@@ -102,8 +102,8 @@
 	}
 }
 
-.touch{	
-	
+.touch{
+
 	#content{
 		@include box-shadow(0px 0px 18px 0px $black);
 	}
@@ -126,7 +126,7 @@
 	}
 
 	#map-blind{
-		position: absolute;	
+		position: absolute;
 		height: 100%;
 		width: 100%;
 		z-index: 0;
@@ -142,6 +142,10 @@
 			height: 43px;
 		}
 
+    #header-main{
+      height: 43px;
+    }
+
 		#title{
 			margin: 9px 15px;
 			font: {
@@ -152,6 +156,16 @@
 		#subtitle, #branding-wrapper, #side-pane-controls, #side-pane-controls .toggle-legend, #side-pane-controls .toggle-description{
 			display: none;
 		}
+
+    #tab-area{
+      select{
+        display: block;
+      }
+
+      .tab{
+        display: none;
+      }
+    }
 
 		#mobile-controls, #mobile-info, .mobile-explore{
 			display: block;
@@ -184,7 +198,7 @@
 }
 
 .touch.snapjs-left, .touch.snapjs-right{
-	
+
 	#map-blind{
 		z-index: 100;
 	}

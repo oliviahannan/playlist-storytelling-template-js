@@ -438,11 +438,15 @@ define(["storymaps/playlist/config/MapConfig",
     }
 
     function createTabs(layers){
-      console.log(layers);
+      var selector = $('<select id="mobile-tabs"></select>');
+
       $.each(layers,function(i){
         var layer = this;
         var text = layer.playlistProperties.tabTitle ? layer.playlistProperties.tabTitle : layer.name;
-        var tab = $('<div class="tab" data-tab-order="' + (layer.playlistProperties.tabOrder ? layer.playlistProperties.tabOrder : 100) + '"">' + text + '</div>');
+        var tab = $('<div class="tab" data-tab-order="' + (layer.playlistProperties.tabOrder ? layer.playlistProperties.tabOrder : 100) + '">' + text + '</div>');
+        var option = $('<option value="'+text+' "data-tab-order="' + (layer.playlistProperties.tabOrder ? layer.playlistProperties.tabOrder : 100) + '">'+text+'</option>');
+        option.data('tab',tab);
+        selector.append(option);
         $('#tab-area').append(tab);
 
         tab.click(function(){
@@ -453,6 +457,17 @@ define(["storymaps/playlist/config/MapConfig",
       $('#tab-area').find('.tab').sort(function (a, b) {
          return $(a).attr('data-tab-order') - $(b).attr('data-tab-order');
       }).appendTo('#tab-area');
+
+      selector.find('option').sort(function (a, b) {
+         return $(a).attr('data-tab-order') - $(b).attr('data-tab-order');
+      }).appendTo('#tab-area select');
+
+      $('#tab-area').append(selector);
+
+      selector.change(function(){
+        console.log($(this).find('option:selected').data('tab'));
+        $(this).find('option:selected').data('tab').trigger('click');
+      });
 
       function selectLayer(tab,layer){
         $('#tab-area .tab').removeClass('active');
@@ -466,7 +481,7 @@ define(["storymaps/playlist/config/MapConfig",
         onSelectTab(layer.id);
       }
 
-      $('#banner').height(150);
+      $('#banner').height($('#header-main').height()+40);
       Helper.resetRegionLayout();
 
     }
