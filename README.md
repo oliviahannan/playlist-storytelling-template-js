@@ -53,6 +53,7 @@ To get started, follow these basic instructions:
 6. Open **index.html** with a text editor
 7. Scroll down till you find the **configOptions** settings and edit these options
 	- **webmap**: unique identifier for the ArcGIS.com map.
+  - **showMultipleLayersAsTabs**: If true and more than one playlist compatiple layer is found, each layer will include a tab.
 	- dataFields (change only if not following sample data)
 		- **nameField**: field to be used as playlist text
 		- **imageField**: field to be used as thumbnail in playlist
@@ -64,6 +65,28 @@ To get started, follow these basic instructions:
 		- items
 			- **visible**: choose (true or false) if item is visible in legend
 			- **name**: add name for item to be displayed in legend
+  - **excludedLayers**: If a playlist compatiple layer is found that should not be included in the list, add a unique string from the layer name.
+  - **layerProperties**: Configure layer specific properties 
+  ```
+  // Sample Layer Properties Array
+  // {
+  //   "layers": [{
+  //       "name": "sampleLayer1", // Unique text string from layer name
+  //       "properties": {
+  //         "keepWebmapStyle": true, // Set to true to use symbology defined in webmap
+  //         "tabTitle": "Title for tab 1", // Text displayed in tab 1
+  //         "tabOrder": 1 // Tab order (acsending)
+  //       }
+  //     },{
+  //       "name": "sampleLayer2", // Unique text string from layer name
+  //       "properties": {
+  //         "keepWebmapStyle": false, // Set to false replace points with numbered icons.
+  //         "tabTitle": "Title for tab 2", // Text displayed in tab 2
+  //         "tabOrder": 2 // Tab order (acsending)
+  //       }
+  //     }]
+  // }
+```
 8. Optionally remove samples folder and Readme.pdf
 9. Copy files to your web server root or in a specific folder
 
@@ -99,6 +122,13 @@ Yes, but you will need to install a proxy server on your web server to make sure
 Yes, by using Portal for ArcGIS. When deployed on a Portal for ArcGIS instance, the Map Tour doesn't require any external service to function. But by default the template will still include the header social buttons and template publishers are able to import pictures from the some online pictures hosting services
 
 ## What's new?
+
+#### Playlist 2.2 released on 1/13/2015
+- Update JavaScript API to version 3.12
+- Option to display multiple playlist compatible layers as tabs
+- Layer specific properties for playlist compatible layers including:
+  - Keep symbology defined in webmap (Numbers will be used in list instead of full numbered icon).
+  - When adding layers as tabs, there are options to modify the tab text and tab order.
 
 #### Playlist 2.1.1 released on 12/12/2013
 

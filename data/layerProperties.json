@@ -1,24 +1,18 @@
-{
-  "layers": [{
-      "name": "production",
-      "properties": {
-        "keepWebmapStyle": true,
-        "tabTitle": "Cheese Production",
-        "tabOrder": 1
-      }
-    },{
-      "name": "consumption",
-      "properties": {
-        "keepWebmapStyle": true,
-        "tabTitle": "Cheese Consumption",
-        "tabOrder": 2
-      }
-    },{
-      "name": "country",
-      "properties": {
-        "keepWebmapStyle": true,
-        "tabTitle": "Cheeses of the World",
-        "tabOrder": 3
-      }
-    }]
-}
+// Sample Layer Properties Array
+// {
+//   "layers": [{
+//       "name": "sampleLayer1", // Unique text string from layer name
+//       "properties": {
+//         "keepWebmapStyle": true, // Set to true to use symbology defined in webmap
+//         "tabTitle": "Title for tab 1", // Text displayed in tab 1
+//         "tabOrder": 1 // Tab order (acsending)
+//       }
+//     },{
+//       "name": "sampleLayer2", // Unique text string from layer name
+//       "properties": {
+//         "keepWebmapStyle": false, // Set to false replace points with numbered icons.
+//         "tabTitle": "Title for tab 2", // Text displayed in tab 2
+//         "tabOrder": 2 // Tab order (acsending)
+//       }
+//     }]
+// }
